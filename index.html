@@ -12,11 +12,11 @@
 
     <style>
         :root {
+            --cream: #F8F6F1;
             --burgundy: #611B2A;
             --green: #1F4B3C;
             --sand: #D8C8B3;
-            --cream: #F8F6F1;
-            --dark: #222222;
+            --dark: #2b2b2b;
         }
 
         * {
@@ -25,8 +25,12 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: "Segoe UI", Arial, sans-serif;
             background: var(--cream);
             color: var(--dark);
             line-height: 1.7;
@@ -39,21 +43,23 @@
         }
 
         header {
-            background: white;
-            padding: 20px 0;
-            border-bottom: 1px solid #eee;
+            position: sticky;
+            top: 0;
+            background: rgba(248, 246, 241, .95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #e5e5e5;
+            z-index: 999;
         }
 
         .nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 18px 0;
         }
 
         .logo {
-            font-size: 28px;
-            font-weight: bold;
-            color: var(--burgundy);
+            height: 70px;
         }
 
         nav a {
@@ -63,56 +69,70 @@
             font-weight: 600;
         }
 
+        nav a:hover {
+            color: var(--green);
+        }
+
         .hero {
+            padding: 120px 20px;
             text-align: center;
-            padding: 100px 20px;
         }
 
         .hero h1 {
+            font-size: 3.5rem;
+            line-height: 1.1;
             color: var(--burgundy);
-            font-size: 3rem;
-            margin-bottom: 20px;
+            max-width: 900px;
+            margin: auto;
         }
 
         .hero p {
-            max-width: 800px;
-            margin: auto;
+            max-width: 850px;
+            margin: 30px auto;
             font-size: 1.2rem;
         }
 
-        .courses {
-            margin: 50px auto;
-            max-width: 800px;
+        .btn {
+            display: inline-block;
+            background: var(--green);
+            color: white;
+            text-decoration: none;
+            padding: 16px 32px;
+            border-radius: 6px;
+            margin-top: 20px;
+            font-weight: 600;
+        }
+
+        .btn:hover {
+            opacity: .9;
+        }
+
+        .qualifications {
+            max-width: 850px;
+            margin: 60px auto 0;
+            display: grid;
+            gap: 20px;
         }
 
         .course {
             background: white;
-            border-left: 5px solid var(--green);
-            padding: 18px;
-            margin-bottom: 15px;
+            padding: 25px;
+            border-left: 6px solid var(--green);
+            box-shadow: 0 6px 20px rgba(0,0,0,.05);
             text-align: left;
-        }
-
-        .button {
-            display: inline-block;
-            margin-top: 30px;
-            background: var(--green);
-            color: white;
-            padding: 15px 35px;
-            border-radius: 5px;
-            text-decoration: none;
+            font-weight: 600;
         }
 
         .stats {
             background: var(--green);
             color: white;
-            padding: 80px 20px;
+            padding: 90px 0;
         }
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
+            grid-template-columns: repeat(3,1fr);
+            gap: 30px;
             text-align: center;
         }
 
@@ -121,57 +141,74 @@
         }
 
         section {
-            padding: 80px 0;
+            padding: 100px 0;
         }
 
         h2 {
             color: var(--burgundy);
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            font-size: 2.2rem;
         }
 
         .white {
             background: white;
         }
 
-        ul {
-            padding-left: 20px;
-        }
-
-        li {
-            margin-bottom: 10px;
-        }
-
         .directors {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
+            grid-template-columns: repeat(2,1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .card {
+            background: white;
+            padding: 35px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,.05);
+        }
+
+        .card h3 {
+            color: var(--burgundy);
+        }
+
+        .licensing-list {
             margin-top: 30px;
         }
 
-        .director {
-            background: white;
-            padding: 30px;
-            border-radius: 8px;
+        .licensing-list li {
+            margin-bottom: 12px;
         }
 
-        .form-placeholder {
+        .form-container {
             background: white;
-            padding: 40px;
-            text-align: center;
-            border-radius: 8px;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 6px 20px rgba(0,0,0,.05);
+        }
+
+        .form-container iframe {
+            width: 100%;
+            height: 900px;
+            border: none;
         }
 
         footer {
             background: var(--burgundy);
             color: white;
-            padding: 50px 20px;
             text-align: center;
+            padding: 80px 20px;
         }
 
-        @media(max-width:768px) {
+        .footer-logo {
+            height: 90px;
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 768px) {
 
             .hero h1 {
-                font-size: 2rem;
+                font-size: 2.2rem;
             }
 
             .stats-grid,
@@ -181,7 +218,11 @@
 
             .nav {
                 flex-direction: column;
-                gap: 15px;
+                gap: 20px;
+            }
+
+            nav a {
+                margin: 0 10px;
             }
         }
     </style>
@@ -190,173 +231,162 @@
 
 <body>
 
-    <header>
-        <div class="container nav">
+<header>
 
-            <div class="logo">
-                WIQS Collective
+    <div class="container nav">
+
+        images/wiqs-black.png
+
+        <nav>
+            #aboutAbout</a>
+            #licensingLicensing</a>
+            #contactContact</a>
+        </nav>
+
+    </div>
+
+</header>
+
+<section class="hero">
+
+    <div class="container">
+
+        <h1>The Future of Accredited Weight Management Education</h1>
+
+        <p>
+            WIQS Collective is preparing to become the licensing and support partner for two established Australian Government accredited Weight Management qualifications, subject to final transfer arrangements.
+        </p>
+
+        #contactRegister Your Interest</a>
+
+        <div class="qualifications">
+
+            <div class="course">
+                11407NAT Certificate IV in Weight Management
             </div>
 
-            <nav>
-                #aboutAbout</a>
-                #licensingLicensing</a>
-                #contactContact</a>
-            </nav>
-
-        </div>
-    </header>
-
-    <section class="hero">
-
-        <div class="container">
-
-            <h1>The Future of Accredited Weight Management Education</h1>
-
-            <p>
-                Wellness Industry Quality & Standards (WIQS) Collective is preparing
-                to become the licensing and support partner for two established
-                Australian Government accredited Weight Management qualifications,
-                subject to final transfer arrangements.
-            </p>
-
-            <div class="courses">
-
-                <div class="course">
-                    11407NAT Certificate IV in Weight Management
-                </div>
-
-                <div class="course">
-                    11133NAT Diploma of Weight Management
-                </div>
-
-            </div>
-
-            #contact
-                Register Your Interest
-            </a>
-
-        </div>
-
-    </section>
-
-    <section class="stats">
-
-        <div class="container stats-grid">
-
-            <div>
-                <h2>869+</h2>
-                <p>Student Enrolments</p>
-            </div>
-
-            <div>
-                <h2>387+</h2>
-                <p>Graduates</p>
-            </div>
-
-            <div>
-                <h2>40%</h2>
-                <p>Completion Rate</p>
+            <div class="course">
+                11133NAT Diploma of Weight Management
             </div>
 
         </div>
 
-    </section>
+    </div>
 
-    <section id="about">
+</section>
 
-        <div class="container">
+<section class="stats">
 
-            <h2>About WIQS Collective</h2>
+    <div class="container stats-grid">
 
-            <p>
-                WIQS Collective exists to support excellence in wellness education
-                through quality assurance, industry consultation, accredited
-                education products and continuous improvement.
-            </p>
+        <div>
+            <h2>869+</h2>
+            <p>Enrolments</p>
+        </div>
 
-            <p>
-                Led by Directors Laura Thompson and Shilpa Smith, WIQS brings more
-                than 40 years of combined experience across the Registered Training
-                Organisation sector.
-            </p>
+        <div>
+            <h2>387+</h2>
+            <p>Graduates</p>
+        </div>
 
-            <div class="directors">
+        <div>
+            <h2>40%</h2>
+            <p>Completion Rate</p>
+        </div>
 
-                <div class="director">
-                    <h3>Laura Thompson</h3>
-                    <p>Director</p>
-                </div>
+    </div>
 
-                <div class="director">
-                    <h3>Shilpa Smith</h3>
-                    <p>Director</p>
-                </div>
+</section>
 
+<section id="about">
+
+    <div class="container">
+
+        <h2>About WIQS Collective</h2>
+
+        <p>
+            Wellness Industry Quality & Standards (WIQS) exists to support excellence in wellness education through quality-assured training products, industry consultation, implementation support and continuous improvement.
+        </p>
+
+        <br>
+
+        <p>
+            Directors Laura Thompson and Shilpa Smith bring more than 40 years of combined experience across the Registered Training Organisation sector, including compliance, quality assurance, training product development, assessment, and student outcomes.
+        </p>
+
+        <div class="directors">
+
+            <div class="card">
+                <h3>Laura Thompson</h3>
+                <p>Director</p>
+            </div>
+
+            <div class="card">
+                <h3>Shilpa Smith</h3>
+                <p>Director</p>
             </div>
 
         </div>
 
-    </section>
+    </div>
 
-    <section id="licensing" class="white">
+</section>
 
-        <div class="container">
+<section id="licensing" class="white">
 
-            <h2>Licensing Opportunities</h2>
+    <div class="container">
 
-            <p>
-                We support RTOs looking to expand into the wellness sector with
-                established qualifications, implementation guidance and ongoing
-                industry support.
-            </p>
+        <h2>Licensing Opportunities</h2>
 
-            <br>
+        <p>
+            We support Registered Training Organisations looking to expand into the wellness sector with established qualifications, onboarding support and ongoing access to industry expertise.
+        </p>
 
-            <ul>
-                <li>Qualification licensing</li>
-                <li>Implementation support</li>
-                <li>Continuous improvement consultation</li>
-                <li>Industry engagement</li>
-                <li>Trainer and assessor resources</li>
-                <li>Long-term partnership approach</li>
-            </ul>
+        <ul class="licensing-list">
+            <li>Qualification licensing</li>
+            <li>Structured onboarding support</li>
+            <li>Continuous improvement consultation</li>
+            <li>Industry engagement</li>
+            <li>Trainer and assessor support</li>
+            <li>Long-term partnership approach</li>
+        </ul>
 
-        </div>
+    </div>
 
-    </section>
+</section>
 
-    <section id="contact">
+<section id="contact">
 
-        <div class="container">
+    <div class="container">
 
-            <h2>Register Your Interest</h2>
+        <h2>Register Your Interest</h2>
 
-            <div class="form-placeholder">
+        <div class="form-container">
 
-                <p>
-                    Replace this section with your Microsoft Forms embed code.
-                </p>
-
-                <!-- Microsoft Form iframe goes here -->
-
-            </div>
+            https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=KMR0Er5YxE6sSxTAheh8GH4-5e30-8JCm4RZ_xBU8YJURDFUMzBBQVgyR09VTkpONEw0M0JLUk1UMy4u&embed=true
+            </iframe>
 
         </div>
 
-    </section>
+    </div>
 
-    <footer>
+</section>
 
-        <h3>WIQS Collective</h3>
+<footer>
 
-        <p>Wellness Industry Quality & Standards</p>
+    images/wiqs-white.png
 
-        <p>hello@wiqs.com.au</p>
+    <p>Wellness Industry Quality & Standards</p>
 
-        <p>Setting the benchmark for excellence in wellness education.</p>
+    <br>
 
-    </footer>
+    <p>hello@wiqs.com.au</p>
+
+    <br>
+
+    <p>Setting the benchmark for excellence in wellness education.</p>
+
+</footer>
 
 </body>
-
 </html>
