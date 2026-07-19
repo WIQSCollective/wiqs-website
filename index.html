@@ -830,7 +830,7 @@
             </div>
         </div>
     </section>
-    <!-- Place the Brevo Assets & Validation Script either here or in your document footer -->
+   <!-- Place the Brevo Assets & Validation Script either here or in your document footer -->
 <link rel="stylesheet" href="https://sibforms.com/forms/end-form/build/sib-styles.css">
 <script>
   window.REQUIRED_CODE_ERROR_MESSAGE = 'Please choose a country code';
@@ -851,15 +851,14 @@
   };
   var AUTOHIDE = Boolean(0);
 
-  // CORRECTED CAPTCHA ENGINE: Maps the verification token to both variables to satisfy Brevo's architecture
+  // ROUTER LOGIC: Catches the manual checkbox token validation and updates the target parameter Brevo monitors
   function handleCaptchaResponse(token) {
-    var turnstileInput = document.getElementById('cf-turnstile-response');
     var recaptchaInput = document.getElementById('g-recaptcha-response');
+    if (recaptchaInput) {
+      recaptchaInput.value = token;
+    }
     
-    if (turnstileInput) turnstileInput.value = token;
-    if (recaptchaInput) recaptchaInput.value = token;
-
-    // Trigger state refresh for Brevo validation engine
+    // Alert Brevo's form watcher that the interactive challenge is complete
     var event = new Event('captchaChange');
     document.getElementById('sib-captcha').dispatchEvent(event);
     window.grecaptcha = window.turnstile;
@@ -871,7 +870,7 @@
 <!-- Clean Contact Layout Section with Integrated Success Display Elements -->
 <section id="contact" class="section contact-section" style="background: #f0ede6; padding: 100px 0;">
     
-    <!-- CORE STYLING: Handles message reveals and layout structure updates -->
+    <!-- CORE STYLING: State engines for processing success and display layout options -->
     <style>
         :where(.sib-form-message-panel) {
             display: none;
@@ -927,7 +926,7 @@
         <div class="sib-form">
             <div id="sib-form-container" class="sib-form-container">
 
-                <!-- Success Alert Box (Kept external to form layout card block) -->
+                <!-- Success Alert Box -->
                 <div id="success-message" class="sib-form-message-panel" style="font-family: inherit; font-size:16px; text-align:left; color:#085229; background-color:#e7faf0; border: 1px solid #13ce66; border-radius:6px; max-width:680px; margin: 40px auto; padding: 30px 40px; box-shadow: 0 10px 25px rgba(0,0,0,.06); background: #fff;">
                     <div style="display: flex; align-items: center; gap: 20px;">
                         <svg viewBox="0 0 512 512" style="width:32px; height:32px; fill:#085229; flex-shrink:0;">
@@ -997,11 +996,17 @@
                             <textarea id="ENQUIRY_MESSAGE" name="ENQUIRY_MESSAGE" rows="4" maxlength="500" autocomplete="off" style="width: 100%; padding: 14px 12px; border: 1px solid var(--sand); border-radius: 4px; background: #fff; font-size: 1rem; font-family: inherit; color: var(--dark); resize: vertical;"></textarea>
                         </div>
 
-                        <!-- Cloudflare Turnstile Integration Container -->
+                        <!-- Visual Checkbox Captcha Container Layout -->
                         <div class="captcha-container" style="margin: 5px 0 10px 0; max-width: 300px; display: block; text-align: left;">
-                            <div class="cf-turnstile g-recaptcha" data-sitekey="0x4AAAAAAD4ufL4HE4GXnijt" id="sib-captcha" data-callback="handleCaptchaResponse" data-language="en"></div>
-                            <!-- Hidden inputs mapped precisely to both potential target parameter layouts -->
-                            <input type="hidden" name="cf-turnstile-response" id="cf-turnstile-response">
+                            <!-- Forced as visible checkbox via appearance configuration -->
+                            <div class="cf-turnstile g-recaptcha" 
+                                 data-sitekey="0x4AAAAAAD4ufL4HE4GXnijt" 
+                                 id="sib-captcha" 
+                                 data-callback="handleCaptchaResponse" 
+                                 data-appearance="always" 
+                                 data-language="en"></div>
+                                 
+                            <!-- Hidden input element targets where Brevo maps structural token components -->
                             <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
                         </div>
 
@@ -1019,7 +1024,7 @@
                             </button>
                         </div>
 
-                        <!-- ERROR DISPLAY CONTAINER: Appears inline underneath the main trigger controls -->
+                        <!-- Error Alert Window Area -->
                         <div id="error-message" class="sib-form-message-panel" style="font-family: inherit; font-size:15px; text-align:left; color:#661d1d; background-color:#ffeded; border: 1px solid #ff4949; border-radius:6px; width: 100%; margin: 10px 0 0 0; padding: 15px 20px;">
                             <div style="display: flex; align-items: center; gap: 12px;">
                                 <svg viewBox="0 0 512 512" style="width:18px; height:18px; fill:#661d1d; flex-shrink:0;">
