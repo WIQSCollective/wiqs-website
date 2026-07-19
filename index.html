@@ -917,11 +917,11 @@
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
 <script>
-  // Simple token router mapping Turnstile to what the backend expects
+  // Correctly maps the Turnstile token to Brevo's Turnstile backend parameter
   function handleCaptchaResponse(token) {
-    var recaptchaInput = document.getElementById('g-recaptcha-response');
-    if (recaptchaInput) {
-      recaptchaInput.value = token;
+    var turnstileInput = document.getElementById('cf-turnstile-response');
+    if (turnstileInput) {
+      turnstileInput.value = token;
     }
   }
 
@@ -975,7 +975,8 @@
           // Parse server errors inline
           errorPanel.style.display = 'block';
           var errorText = errorPanel.querySelector('.sib-form-message-panel__inner-text');
-          if (errorText && data.errors && data.errors['cf-turnstile-response']) {
+          
+          if (errorText && data.errors && (data.errors['cf-turnstile-response'] || data.errors['g-recaptcha-response'])) {
             errorText.textContent = "Security verification failed. Please check the tick box again.";
           } else if (errorText && data.errors && data.errors.message) {
             errorText.textContent = data.errors.message;
@@ -1098,7 +1099,7 @@
                                  data-language="en"></div>
                             
                             <!-- Stores token value parsed by Brevo's endpoint -->
-                            <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
+                            <input type="hidden" name="cf-turnstile-response" id="cf-turnstile-response">
                         </div>
 
                         <!-- Anti-Spam Hidden Variables -->
@@ -1115,7 +1116,7 @@
                             </button>
                         </div>
 
-                        <!-- SUCCESS NOTIFICATION MODULE: Renders cleanly inside layout beneath submit elements -->
+                        <!-- SUCCESS NOTIFICATION MODULE -->
                         <div id="success-message" style="display: none; font-family: inherit; font-size:15px; text-align:left; color:#085229; background-color:#e7faf0; border: 1px solid #13ce66; border-radius:6px; width: 100%; margin: 10px 0 0 0; padding: 15px 20px;">
                             <div style="display: flex; align-items: center; gap: 12px;">
                                 <svg viewBox="0 0 512 512" style="width:18px; height:18px; fill:#085229; flex-shrink:0;">
