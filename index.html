@@ -861,98 +861,109 @@
 <script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
-<!-- Clean Contact Layout Section -->
+<!-- Clean Contact Layout Section with Integrated Success Display Elements -->
 <section id="contact" class="section contact-section" style="background: #f0ede6; padding: 100px 0;">
     <div class="container">
         
-        <!-- Brevo Native Message Alert Feedback Boxes -->
-        <div id="error-message" class="sib-form-message-panel" style="font-family: inherit; font-size:16px; text-align:left; color:#661d1d; background-color:#ffeded; border: 1px solid #ff4949; border-radius:6px; max-width:680px; margin: 0 auto 20px auto; padding: 15px 20px;">
-            <div style="display: flex; align-items: center; gap: 12px;">
-                <svg viewBox="0 0 512 512" style="width:20px; height:20px; fill:#661d1d; flex-shrink:0;">
-                    <path d="M256 40c118.621 0 216 96.075 216 216 0 119.291-96.61 216-216 216-119.244 0-216-96.562-216-216 0-119.203 96.602-216 216-216m0-32C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm-11.49 120h22.979c6.823 0 12.274 5.682 11.99 12.5l-7 168c-.268 6.428-5.556 11.5-11.99 11.5h-8.979c-6.433 0-11.722-5.073-11.99-11.5l-7-168c-.283-6.818 5.167-12.5 11.99-12.5zM256 340c-15.464 0-28 12.536-28 28s12.536 28 28 28 28-12.536 28-28-12.536-28-28-28z" />
-                </svg>
-                <span>Your enquiry could not be sent. Please try again.</span>
-            </div>
-        </div>
-
-        <div id="success-message" class="sib-form-message-panel" style="font-family: inherit; font-size:16px; text-align:left; color:#085229; background-color:#e7faf0; border: 1px solid #13ce66; border-radius:6px; max-width:680px; margin: 0 auto 20px auto; padding: 15px 20px;">
-            <div style="display: flex; align-items: center; gap: 12px;">
-                <svg viewBox="0 0 512 512" style="width:20px; height:20px; fill:#085229; flex-shrink:0;">
-                    <path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 464c-118.664 0-216-96.055-216-216 0-118.663 96.055-216 216-216 118.664 0 216 96.055 216 216 0 118.663-96.055 216-216 216zm141.63-274.961L217.15 376.071c-4.705 4.667-12.303 4.637-16.97-.068l-85.878-86.572c-4.667-4.705-4.637-12.303.068-16.97l8.52-8.451c4.705-4.667 12.303-4.637 16.97.068l68.976 69.533 163.441-162.13c4.705-4.667 12.303-4.637 16.97.068l8.451 8.52c4.668 4.705 4.637 12.303-.068 16.97z" />
-                </svg>
-                <span>Thank you for your enquiry. We will be in touch with you real soon!</span>
-            </div>
-        </div>
-
-        <!-- Card Container -->
-        <div class="card contact-card fade-in-up" style="max-width: 680px; margin: 0 auto; padding: 50px 50px; background: #fff; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,.06);">
-            <h2 style="text-align: left; margin-bottom: 35px; font-family: 'Archivo Black', sans-serif; color: var(--burgundy); font-size: 2.5rem;">Enquire Now</h2>
-            
-            <!-- Securely Connected Brevo Form with API Handlers -->
-            <form id="sib-form" method="POST" action="https://c8ace523.sibforms.com/serve/MUIFAC8oAPTs_30C2Gd95mpceipV9rui52Pa1Nw6UTHPVl6Tb3lbWwGtffSkzzVc30Xiwt9zmWyTtRnKCFV0VDqp8vA2ufCeIVoCdmwJFH9L6L5UaMFqNEs1NAaqO7bstrd2LRVCaIKWwJlydK2cIt9y6vpldTmbmjCWYv1eurocYJQSw0CfUvzmbX-Q76ZEIwWb_p1EgCZCoChfPA==" data-type="subscription" style="display: flex; flex-direction: column; gap: 24px;">
+        <!-- CRITICAL: Outer wrapper container Brevo's javascript targets to toggle messages -->
+        <div class="sib-form">
+            <div id="sib-form-container" class="sib-form-container">
                 
-                <!-- First Name -->
-                <div class="form-entry-wrapper" style="display: flex; flex-direction: column; gap: 8px;">
-                    <label style="font-weight: 700; color: var(--burgundy); font-size: 1.15rem; font-family: 'Segoe UI', system-ui, sans-serif;" for="FIRSTNAME">First Name<span style="color: #e04b4b; margin-left: 2px;">*</span></label>
-                    <input type="text" id="FIRSTNAME" name="FIRSTNAME" maxlength="200" autocomplete="off" data-required="true" required style="width: 100%; padding: 14px 12px; border: 1px solid var(--sand); border-radius: 4px; background: #fff; font-size: 1rem; font-family: inherit; color: var(--dark);">
+                <!-- Native Brevo Error Alert Box (Hidden by default, styled to match layout) -->
+                <div id="error-message" class="sib-form-message-panel" style="font-family: inherit; font-size:16px; text-align:left; color:#661d1d; background-color:#ffeded; border: 1px solid #ff4949; border-radius:6px; max-width:680px; margin: 0 auto 20px auto; padding: 15px 20px;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <svg viewBox="0 0 512 512" style="width:20px; height:20px; fill:#661d1d; flex-shrink:0;">
+                            <path d="M256 40c118.621 0 216 96.075 216 216 0 119.291-96.61 216-216 216-119.244 0-216-96.562-216-216 0-119.203 96.602-216 216-216m0-32C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm-11.49 120h22.979c6.823 0 12.274 5.682 11.99 12.5l-7 168c-.268 6.428-5.556 11.5-11.99 11.5h-8.979c-6.433 0-11.722-5.073-11.99-11.5l-7-168c-.283-6.818 5.167-12.5 11.99-12.5zM256 340c-15.464 0-28 12.536-28 28s12.536 28 28 28 28-12.536 28-28-12.536-28-28-28z" />
+                        </svg>
+                        <span class="sib-form-message-panel__inner-text">Your enquiry could not be sent. Please try again.</span>
+                    </div>
                 </div>
 
-                <!-- Last Name -->
-                <div class="form-entry-wrapper" style="display: flex; flex-direction: column; gap: 8px;">
-                    <label style="font-weight: 700; color: var(--burgundy); font-size: 1.15rem; font-family: 'Segoe UI', system-ui, sans-serif;" for="LASTNAME">Last Name<span style="color: #e04b4b; margin-left: 2px;">*</span></label>
-                    <input type="text" id="LASTNAME" name="LASTNAME" maxlength="200" autocomplete="off" data-required="true" required style="width: 100%; padding: 14px 12px; border: 1px solid var(--sand); border-radius: 4px; background: #fff; font-size: 1rem; font-family: inherit; color: var(--dark);">
+                <!-- Native Brevo Success Alert Box (Hidden by default, styled to match layout) -->
+                <div id="success-message" class="sib-form-message-panel" style="font-family: inherit; font-size:16px; text-align:left; color:#085229; background-color:#e7faf0; border: 1px solid #13ce66; border-radius:6px; max-width:680px; margin: 0 auto 20px auto; padding: 25px 30px; box-shadow: 0 10px 25px rgba(0,0,0,.04);">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <svg viewBox="0 0 512 512" style="width:24px; height:24px; fill:#085229; flex-shrink:0;">
+                            <path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 464c-118.664 0-216-96.055-216-216 0-118.663 96.055-216 216-216 118.664 0 216 96.055 216 216 0 118.663-96.055 216-216 216zm141.63-274.961L217.15 376.071c-4.705 4.667-12.303 4.637-16.97-.068l-85.878-86.572c-4.667-4.705-4.637-12.303.068-16.97l8.52-8.451c4.705-4.667 12.303-4.637 16.97.068l68.976 69.533 163.441-162.13c4.705-4.667 12.303-4.637 16.97.068l8.451 8.52c4.668 4.705 4.637 12.303-.068 16.97z" />
+                        </svg>
+                        <span class="sib-form-message-panel__inner-text" style="font-weight: 600; font-size: 1.1rem;">Thank you for your enquiry. We will be in touch with you real soon!</span>
+                    </div>
                 </div>
 
-                <!-- Email -->
-                <div class="form-entry-wrapper" style="display: flex; flex-direction: column; gap: 8px;">
-                    <label style="font-weight: 700; color: var(--burgundy); font-size: 1.15rem; font-family: 'Segoe UI', system-ui, sans-serif;" for="EMAIL">Email<span style="color: #e04b4b; margin-left: 2px;">*</span></label>
-                    <input type="text" id="EMAIL" name="EMAIL" autocomplete="off" data-required="true" required style="width: 100%; padding: 14px 12px; border: 1px solid var(--sand); border-radius: 4px; background: #fff; font-size: 1rem; font-family: inherit; color: var(--dark);">
+                <!-- Main Form Layout Card wrapper -->
+                <div id="sib-container" class="card contact-card fade-in-up" style="max-width: 680px; margin: 0 auto; padding: 50px 50px; background: #fff; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,.06); border: none;">
+                    <h2 style="text-align: left; margin-bottom: 35px; font-family: 'Archivo Black', sans-serif; color: var(--burgundy); font-size: 2.5rem;">Enquire Now</h2>
+                    
+                    <form id="sib-form" method="POST" action="https://c8ace523.sibforms.com/serve/MUIFAC8oAPTs_30C2Gd95mpceipV9rui52Pa1Nw6UTHPVl6Tb3lbWwGtffSkzzVc30Xiwt9zmWyTtRnKCFV0VDqp8vA2ufCeIVoCdmwJFH9L6L5UaMFqNEs1NAaqO7bstrd2LRVCaIKWwJlydK2cIt9y6vpldTmbmjCWYv1eurocYJQSw0CfUvzmbX-Q76ZEIwWb_p1EgCZCoChfPA==" data-type="subscription" style="display: flex; flex-direction: column; gap: 24px;">
+                        
+                        <!-- First Name -->
+                        <div class="form-entry-wrapper" style="display: flex; flex-direction: column; gap: 8px;">
+                            <label style="font-weight: 700; color: var(--burgundy); font-size: 1.15rem; font-family: 'Segoe UI', system-ui, sans-serif;" for="FIRSTNAME">First Name<span style="color: #e04b4b; margin-left: 2px;">*</span></label>
+                            <input type="text" id="FIRSTNAME" name="FIRSTNAME" maxlength="200" autocomplete="off" data-required="true" required style="width: 100%; padding: 14px 12px; border: 1px solid var(--sand); border-radius: 4px; background: #fff; font-size: 1rem; font-family: inherit; color: var(--dark);">
+                        </div>
+
+                        <!-- Last Name -->
+                        <div class="form-entry-wrapper" style="display: flex; flex-direction: column; gap: 8px;">
+                            <label style="font-weight: 700; color: var(--burgundy); font-size: 1.15rem; font-family: 'Segoe UI', system-ui, sans-serif;" for="LASTNAME">Last Name<span style="color: #e04b4b; margin-left: 2px;">*</span></label>
+                            <input type="text" id="LASTNAME" name="LASTNAME" maxlength="200" autocomplete="off" data-required="true" required style="width: 100%; padding: 14px 12px; border: 1px solid var(--sand); border-radius: 4px; background: #fff; font-size: 1rem; font-family: inherit; color: var(--dark);">
+                        </div>
+
+                        <!-- Email -->
+                        <div class="form-entry-wrapper" style="display: flex; flex-direction: column; gap: 8px;">
+                            <label style="font-weight: 700; color: var(--burgundy); font-size: 1.15rem; font-family: 'Segoe UI', system-ui, sans-serif;" for="EMAIL">Email<span style="color: #e04b4b; margin-left: 2px;">*</span></label>
+                            <input type="text" id="EMAIL" name="EMAIL" autocomplete="off" data-required="true" required style="width: 100%; padding: 14px 12px; border: 1px solid var(--sand); border-radius: 4px; background: #fff; font-size: 1rem; font-family: inherit; color: var(--dark);">
+                        </div>
+
+                        <!-- Mobile Phone -->
+                        <div class="form-entry-wrapper" style="display: flex; flex-direction: column; gap: 8px;">
+                            <label style="font-weight: 700; color: var(--burgundy); font-size: 1.15rem; font-family: 'Segoe UI', system-ui, sans-serif;" for="MOBILE_PHONE">Mobile Phone<span style="color: #e04b4b; margin-left: 2px;">*</span></label>
+                            <input type="text" id="MOBILE_PHONE" name="MOBILE_PHONE" data-numeric="true" maxlength="200" autocomplete="off" data-required="true" required style="width: 100%; padding: 14px 12px; border: 1px solid var(--sand); border-radius: 4px; background: #fff; font-size: 1rem; font-family: inherit; color: var(--dark);">
+                        </div>
+
+                        <!-- Tell Us About Your Enquiry -->
+                        <div class="form-entry-wrapper" style="display: flex; flex-direction: column; gap: 8px;">
+                            <label style="font-weight: 700; color: var(--burgundy); font-size: 1.15rem; font-family: 'Segoe UI', system-ui, sans-serif;" for="ENQUIRY_MESSAGE">Tell Us About Your Enquiry</label>
+                            <textarea id="ENQUIRY_MESSAGE" name="ENQUIRY_MESSAGE" rows="4" maxlength="500" autocomplete="off" style="width: 100%; padding: 14px 12px; border: 1px solid var(--sand); border-radius: 4px; background: #fff; font-size: 1rem; font-family: inherit; color: var(--dark); resize: vertical;"></textarea>
+                        </div>
+
+                        <!-- Cloudflare Turnstile Integration Container -->
+                        <div class="captcha-container" style="margin: 5px 0 10px 0; max-width: 300px; display: block; text-align: left;">
+                            <div class="cf-turnstile g-recaptcha" data-sitekey="0x4AAAAAAD4ufL4HE4GXnijt" id="sib-captcha" data-callback="handleCaptchaResponse" data-language="en"></div>
+                        </div>
+
+                        <!-- Hidden Anti-Spam Tokens -->
+                        <input type="text" name="email_address_check" value="" style="display:none !important;" class="input--hidden">
+                        <input type="hidden" name="locale" value="en">
+
+                        <!-- Submit Button with Brevo's Required Engine Hook Classes -->
+                        <div style="text-align: left;">
+                            <button type="submit" class="sib-form-block__button sib-form-block__button-with-loader btn" form="sib-form" style="border: none; cursor: pointer; text-align: center; width: auto; padding: 14px 32px; background: var(--green); color: #fff; font-family: 'Segoe UI', system-ui, sans-serif; font-weight: 700; font-size: 1.1rem; border-radius: 6px; letter-spacing: 0.5px; box-shadow: 0 4px 15px rgba(31, 75, 60, 0.2); transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 10px;">
+                                <!-- The loading spinner icon Brevo targets during script processing -->
+                                <svg class="icon clickable__icon progress-indicator__icon sib-hide-loader-icon" viewBox="0 0 512 512" style="width: 16px; height: 16px; fill: currentColor;">
+                                    <path d="M460.116 373.846l-20.823-12.022c-5.541-3.199-7.54-10.159-4.663-15.874 30.137-59.886 28.343-131.652-5.386-189.946-33.641-58.394-94.896-95.833-161.827-99.676C261.028 55.961 256 50.751 256 44.352V20.309c0-6.904 5.808-12.337 12.703-11.982 83.556 4.306 160.163 50.864 202.11 123.677 42.063 72.696 44.079 162.316 6.031 236.832-3.14 6.148-10.75 8.461-16.728 5.01z" />
+                                </svg>
+                                <span>SUBMIT</span>
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Brevo Compliance Footer Notice -->
+                    <div class="form-compliance" style="display: flex; align-items: flex-start; gap: 20px; margin-top: 35px; padding-top: 25px; border-top: 1px solid var(--sand);">
+                        <div class="compliance-logo" style="flex-shrink: 0; width: 55px; height: 55px;">
+                            <svg viewBox="0 0 100 100" style="width: 100%; height: 100%;">
+                                <circle cx="50" cy="50" r="42" fill="none" stroke="#1d74f2" stroke-width="3" stroke-dasharray="8,5"/>
+                                <circle cx="50" cy="50" r="30" fill="#1d74f2"/>
+                                <path d="M38 50 L46 58 L62 40" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <p style="font-size: 0.9rem; color: #555; line-height: 1.6; margin: 0; text-align: left; font-family: 'Segoe UI', system-ui, sans-serif;">
+                            We use Brevo as our marketing platform. By submitting this form you agree that the personal data you provided will be transferred to Brevo for processing in accordance with <a href="https://www.brevo.com/en/legal/privacypolicy/" target="_blank" rel="nofollow noopener" style="color: #1d74f2; text-decoration: underline; font-weight: 500;">Brevo's Privacy Policy</a>.
+                        </p>
+                    </div>
                 </div>
 
-                <!-- Mobile Phone (Retained text type + data attributes for validation safety) -->
-                <div class="form-entry-wrapper" style="display: flex; flex-direction: column; gap: 8px;">
-                    <label style="font-weight: 700; color: var(--burgundy); font-size: 1.15rem; font-family: 'Segoe UI', system-ui, sans-serif;" for="MOBILE_PHONE">Mobile Phone<span style="color: #e04b4b; margin-left: 2px;">*</span></label>
-                    <input type="text" id="MOBILE_PHONE" name="MOBILE_PHONE" data-numeric="true" maxlength="200" autocomplete="off" data-required="true" required style="width: 100%; padding: 14px 12px; border: 1px solid var(--sand); border-radius: 4px; background: #fff; font-size: 1rem; font-family: inherit; color: var(--dark);">
-                </div>
-
-                <!-- Tell Us About Your Enquiry -->
-                <div class="form-entry-wrapper" style="display: flex; flex-direction: column; gap: 8px;">
-                    <label style="font-weight: 700; color: var(--burgundy); font-size: 1.15rem; font-family: 'Segoe UI', system-ui, sans-serif;" for="ENQUIRY_MESSAGE">Tell Us About Your Enquiry</label>
-                    <textarea id="ENQUIRY_MESSAGE" name="ENQUIRY_MESSAGE" rows="4" maxlength="500" autocomplete="off" style="width: 100%; padding: 14px 12px; border: 1px solid var(--sand); border-radius: 4px; background: #fff; font-size: 1rem; font-family: inherit; color: var(--dark); resize: vertical;"></textarea>
-                </div>
-
-                <!-- Active Cloudflare Turnstile Integration Container mapped to Brevo's script hooks -->
-                <div class="captcha-container" style="margin: 5px 0 10px 0; max-width: 300px; display: block; text-align: left;">
-                    <div class="cf-turnstile g-recaptcha" data-sitekey="0x4AAAAAAD4ufL4HE4GXnijt" id="sib-captcha" data-callback="handleCaptchaResponse" data-language="en"></div>
-                </div>
-
-                <!-- Hidden Security Validation Fields Brevo Requires -->
-                <input type="text" name="email_address_check" value="" style="display:none !important;" class="input--hidden">
-                <input type="hidden" name="locale" value="en">
-
-                <!-- Fixed Submission Button -->
-<button type="submit" class="sib-form-block__button sib-form-block__button-with-loader btn" form="sib-form" style="border: none; cursor: pointer; text-align: center; width: auto; align-self: flex-start; padding: 14px 32px; background: var(--green); color: #fff; font-family: 'Segoe UI', system-ui, sans-serif; font-weight: 700; font-size: 1.1rem; border-radius: 6px; letter-spacing: 0.5px; box-shadow: 0 4px 15px rgba(31, 75, 60, 0.2); transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 8px;">
-    <svg class="icon clickable__icon progress-indicator__icon sib-hide-loader-icon" viewBox="0 0 512 512" style="width: 16px; height: 16px; fill: currentColor; display: none;">
-        <path d="M460.116 373.846l-20.823-12.022c-5.541-3.199-7.54-10.159-4.663-15.874 30.137-59.886 28.343-131.652-5.386-189.946-33.641-58.394-94.896-95.833-161.827-99.676C261.028 55.961 256 50.751 256 44.352V20.309c0-6.904 5.808-12.337 12.703-11.982 83.556 4.306 160.163 50.864 202.11 123.677 42.063 72.696 44.079 162.316 6.031 236.832-3.14 6.148-10.75 8.461-16.728 5.01z" />
-    </svg>
-    SUBMIT
-</button>
-            </form>
-
-            <!-- Brevo Compliance Notice Layout Block -->
-            <div class="form-compliance" style="display: flex; align-items: flex-start; gap: 20px; margin-top: 35px; padding-top: 25px; border-top: 1px solid var(--sand);">
-                <div class="compliance-logo" style="flex-shrink: 0; width: 55px; height: 55px;">
-                    <svg viewBox="0 0 100 100" style="width: 100%; height: 100%;">
-                        <circle cx="50" cy="50" r="42" fill="none" stroke="#1d74f2" stroke-width="3" stroke-dasharray="8,5"/>
-                        <circle cx="50" cy="50" r="30" fill="#1d74f2"/>
-                        <path d="M38 50 L46 58 L62 40" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </div>
-                <p style="font-size: 0.9rem; color: #555; line-height: 1.6; margin: 0; text-align: left; font-family: 'Segoe UI', system-ui, sans-serif;">
-                    We use Brevo as our marketing platform. By submitting this form you agree that the personal data you provided will be transferred to Brevo for processing in accordance with <a href="https://www.brevo.com/en/legal/privacypolicy/" target="_blank" rel="nofollow noopener" style="color: #1d74f2; text-decoration: underline; font-weight: 500;">Brevo's Privacy Policy</a>.
-                </p>
             </div>
         </div>
+        
     </div>
 </section>
     <footer>
