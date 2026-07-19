@@ -1,21 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
     <!-- Brevo Conversations {literal} -->
-    <script>
-        (function(d, w, c) {
-            w.BrevoConversationsID = '6a5bfd24c1c4a3c8ec0f8bb9';
-            w[c] = w[c] || function() {
-                (w[c].q = w[c].q || []).push(arguments);
-            };
-            var s = d.createElement('script');
-            s.async = true;
-            s.src = 'https://conversations-widget.brevo.com/brevo-conversations.js';
-            if (d.head) d.head.appendChild(s);
-        })(document, window, 'BrevoConversations');
-    </script>
-    <!-- /Brevo Conversations {/literal} -->
-
+<script>
+    (function(d, w, c) {
+        w.BrevoConversationsID = '6a5bfd24c1c4a3c8ec0f8bb9';
+        w[c] = w[c] || function() {
+            (w[c].q = w[c].q || []).push(arguments);
+        };
+        var s = d.createElement('script');
+        s.async = true;
+        s.src = 'https://conversations-widget.brevo.com/brevo-conversations.js';
+        if (d.head) d.head.appendChild(s);
+    })(document, window, 'BrevoConversations');
+</script>
+<!-- /Brevo Conversations {/literal} -->
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WIQS Collective | Wellness Industry Quality & Standards</title>
@@ -30,17 +29,14 @@
             --sand: #D8C8B3;
             --dark: #222;
         }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         html {
             scroll-behavior: smooth;
         }
-
         body {
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             background: var(--cream);
@@ -48,37 +44,31 @@
             line-height: 1.7;
             overflow-x: hidden;
         }
-
         .container {
             max-width: 1200px;
             width: 90%;
             margin: auto;
         }
-
         /* --- Scroll Animation Classes --- */
         .fade-in-up {
             opacity: 0;
             transform: translateY(40px);
             transition: opacity 0.8s ease, transform 0.8s ease;
         }
-
         .fade-in-left {
             opacity: 0;
             transform: translateX(-50px);
             transition: opacity 0.8s ease, transform 0.8s ease;
         }
-
         .fade-in-right {
             opacity: 0;
             transform: translateX(50px);
             transition: opacity 0.8s ease, transform 0.8s ease;
         }
-
         .animate-visible {
             opacity: 1;
             transform: translateY(0) translateX(0);
         }
-
         /* --- Header & Navigation --- */
         header {
             position: sticky;
@@ -87,13 +77,11 @@
             z-index: 1000;
             box-shadow: 0 2px 12px rgba(0,0,0,.05);
         }
-
         .nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-
         .logoimg {
             height: 100px;
             transition: transform 0.3s ease;
@@ -102,7 +90,6 @@
         .logoimg:hover {
             transform: scale(1.02);
         }
-
         .nav-links a {
             text-decoration: none;
             color: var(--burgundy);
@@ -111,7 +98,6 @@
             position: relative;
             padding-bottom: 4px;
         }
-
         .nav-links a::after {
             content: '';
             position: absolute;
@@ -124,33 +110,27 @@
             transform-origin: bottom right;
             transition: transform 0.25s ease-out;
         }
-
         .nav-links a:hover::after {
             transform: scaleX(1);
             transform-origin: bottom left;
         }
-
         /* --- Sections --- */
         .section {
             padding: 100px 0;
         }
-
         /* --- Hero Section --- */
         .hero {
             text-align: center;
             padding: 100px 20px 120px;
         }
-
         .hero h1, .section h2 {
             font-family: 'Archivo Black', sans-serif;
             color: var(--burgundy);
         }
-
         .hero h1 {
             font-size: 4rem;
             line-height: 1.1;
         }
-
         .tagline {
             font-family: 'Libre Baskerville', serif;
             font-style: italic;
@@ -159,13 +139,11 @@
             color: var(--burgundy);
             max-width: 900px;
         }
-
         .hero-text {
             max-width: 850px;
             margin: 25px auto 40px;
             font-size: 1.1rem;
         }
-
         .btn {
             background: var(--green);
             color: #fff;
@@ -177,13 +155,31 @@
             box-shadow: 0 4px 15px rgba(31, 75, 60, 0.2);
             transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
         }
-
         .btn:hover {
             transform: translateY(-4px);
             background-color: #17382d;
             box-shadow: 0 6px 20px rgba(31, 75, 60, 0.4);
         }
-
+        /* --- Form Submit Button Styling Extension --- */
+        .form-submit-btn {
+            background: var(--green);
+            color: #fff;
+            padding: 16px 38px;
+            border: none;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(31, 75, 60, 0.2);
+            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .form-submit-btn:hover {
+            transform: translateY(-4px);
+            background-color: #17382d;
+            box-shadow: 0 6px 20px rgba(31, 75, 60, 0.4);
+        }
         /* --- Qualification Cards --- */
         .qualifications {
             display: grid;
@@ -192,7 +188,6 @@
             max-width: 900px;
             margin: 60px auto 0;
         }
-
         .course {
             background: #fff;
             border-radius: 12px;
@@ -205,12 +200,10 @@
             font-size: 1.2rem;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
         .course:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 35px rgba(31, 75, 60, 0.12);
         }
-
         .course span {
             display: block;
             font-size: 0.9rem;
@@ -218,7 +211,6 @@
             margin-bottom: 5px;
             font-weight: 400;
         }
-
         /* --- Grid Utilities --- */
         .card {
             background: #fff;
@@ -227,26 +219,22 @@
             padding: 40px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
         .card:hover {
             transform: translateY(-4px);
             box-shadow: 0 15px 30px rgba(0,0,0,0.1);
         }
-
         .section h2 {
             font-size: 2.5rem;
             margin-bottom: 40px;
             position: relative;
             display: inline-block;
         }
-
         /* --- Statistics --- */
         .statsgrid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 25px;
         }
-
         .stat {
             background: #fff;
             border-radius: 12px;
@@ -255,54 +243,45 @@
             text-align: center;
             transition: transform 0.3s ease;
         }
-
         .stat:hover {
             transform: translateY(-4px);
         }
-
         .stat h3 {
             font-size: 3.5rem;
             color: var(--burgundy);
             font-family: 'Archivo Black', sans-serif;
             line-height: 1.2;
         }
-
         .stat p {
             font-weight: 600;
             color: #555;
             margin-top: 10px;
         }
-
         /* --- Why Partner Grid --- */
         .whygrid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 25px;
         }
-
         .whygrid .card h3 {
             color: var(--burgundy);
             margin-bottom: 15px;
             font-size: 1.4rem;
         }
-
         /* --- Feature Grid (Ownership) --- */
         .feature-section {
             background: #f0ede6;
         }
-
         .ownership-lead {
             font-size: 1.2rem;
             max-width: 850px;
             margin-bottom: 40px;
         }
-
         .feature-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 20px;
         }
-
         .feature-item {
             background: #fff;
             padding: 25px;
@@ -313,13 +292,11 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.03);
             transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
         }
-
         .feature-item:hover {
             transform: translateY(-3px);
             background-color: var(--green);
             color: #fff;
         }
-
         /* --- Wellness Pathway Chips --- */
         .chips-container {
             display: flex;
@@ -327,7 +304,6 @@
             gap: 15px;
             margin-top: 30px;
         }
-
         .chip {
             background: #fff;
             padding: 14px 28px;
@@ -338,14 +314,12 @@
             border: 1px solid var(--sand);
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
         }
-
         .chip:hover {
             transform: translateY(-6px);
             box-shadow: 0 10px 20px rgba(97, 27, 42, 0.15);
             background-color: var(--burgundy);
             color: #fff;
         }
-
         /* --- Industry Leadership --- */
         .leaders-layout {
             display: grid;
@@ -353,18 +327,15 @@
             gap: 40px;
             align-items: center;
         }
-
         .leaders-list {
             list-style: none;
         }
-
         .leaders-list li {
             position: relative;
             padding-left: 30px;
             margin-bottom: 15px;
             font-weight: 600;
         }
-
         .leaders-list li::before {
             content: "✓";
             position: absolute;
@@ -373,26 +344,22 @@
             font-weight: 900;
             font-size: 1.2rem;
         }
-
         /* --- Interactive Timeline --- */
         .timeline-section {
             background: #f0ede6;
             position: relative;
         }
-
         .timeline-intro {
             max-width: 850px;
             margin-bottom: 60px;
             font-size: 1.1rem;
         }
-
         .timeline-container {
             position: relative;
             max-width: 1000px;
             margin: auto;
             padding: 40px 0;
         }
-
         .timeline-container::after {
             content: '';
             position: absolute;
@@ -403,24 +370,20 @@
             left: 50%;
             margin-left: -2px;
         }
-
         .timeline-block {
             position: relative;
             margin-bottom: 50px;
             width: 50%;
             padding: 0 40px;
         }
-
         .timeline-block-left {
             left: 0;
             text-align: right;
         }
-
         .timeline-block-right {
             left: 50%;
             text-align: left;
         }
-
         .timeline-dot {
             position: absolute;
             width: 20px;
@@ -431,15 +394,12 @@
             z-index: 10;
             transition: transform 0.3s ease;
         }
-
         .timeline-block-left .timeline-dot {
             right: -10px;
         }
-
         .timeline-block-right .timeline-dot {
             left: -10px;
         }
-
         .timeline-content {
             background: #fff;
             padding: 30px;
@@ -451,14 +411,12 @@
         .timeline-content:hover .timeline-dot {
             transform: scale(1.4);
         }
-
         .timeline-year {
             font-family: 'Archivo Black', sans-serif;
             color: var(--burgundy);
             font-size: 1.6rem;
             margin-bottom: 5px;
         }
-
         .timeline-title {
             font-family: 'Libre Baskerville', serif;
             font-weight: 700;
@@ -466,7 +424,6 @@
             color: var(--green);
             margin-bottom: 10px;
         }
-
         .forward-card {
             max-width: 1000px;
             margin: 60px auto 0;
@@ -474,20 +431,17 @@
             color: #fff;
             text-align: center;
         }
-
         .forward-card h3 {
             font-family: 'Archivo Black', sans-serif;
             font-size: 1.8rem;
             margin-bottom: 15px;
         }
-
         /* --- Meet the Directors --- */
         .directors-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 40px;
         }
-
         .director-card {
             background: #fff;
             border-radius: 12px;
@@ -497,12 +451,10 @@
             flex-direction: column;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
         .director-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 20px 40px rgba(0,0,0,0.08);
         }
-
         .director-img {
             width: 100%;
             height: 380px;
@@ -512,14 +464,12 @@
             margin-bottom: 25px;
             background: #ddd;
         }
-
         .director-card h3 {
             font-family: 'Archivo Black', sans-serif;
             color: var(--burgundy);
             font-size: 1.8rem;
             margin-bottom: 5px;
         }
-
         .director-role {
             font-family: 'Libre Baskerville', serif;
             font-style: italic;
@@ -527,7 +477,6 @@
             color: var(--green);
             margin-bottom: 15px;
         }
-
         .director-quals {
             font-size: 0.95rem;
             color: #555;
@@ -536,31 +485,26 @@
             margin-bottom: 20px;
             line-height: 1.5;
         }
-
         .director-summary {
             margin-bottom: 20px;
             font-weight: 600;
         }
-
         .bio-wrapper {
             max-height: 0;
             overflow: hidden;
             opacity: 0;
             transition: max-height 0.8s cubic-bezier(0, 1, 0, 1), opacity 0.5s ease;
         }
-
         .bio-wrapper.open {
             max-height: 3000px;
             opacity: 1;
             transition: max-height 0.8s cubic-bezier(1, 0, 1, 0), opacity 0.8s ease;
         }
-
         .bio-text p {
             margin-bottom: 15px;
             font-size: 0.95rem;
             color: #444;
         }
-
         .bio-toggle-btn {
             background: none;
             border: none;
@@ -576,25 +520,20 @@
             text-align: left;
             width: fit-content;
         }
-
         .bio-toggle-btn:hover {
             color: var(--burgundy);
         }
-
         /* --- Contact Form Section --- */
         .contact-section {
             background: #f0ede6;
         }
-
         .contactform {
             max-width: 750px;
             margin: auto;
         }
-
         .form-group {
             margin-bottom: 22px;
         }
-
         .form-group label {
             display: block;
             margin-bottom: 8px;
@@ -602,7 +541,6 @@
             font-weight: 700;
             color: var(--burgundy);
         }
-
         input, select, textarea {
             width: 100%;
             padding: 14px;
@@ -613,31 +551,26 @@
             background: #fff;
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
-
         input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: var(--green);
             box-shadow: 0 0 0 4px rgba(31, 75, 60, 0.1);
         }
-
         /* --- Footer --- */
         footer {
             background: var(--burgundy);
-            color: #fff;
+            color: white;
             text-align: center;
-            padding: 60px 20px;
+            padding: 70px 20px;
         }
-
         .footer-logo {
-            height: 80px;
+            height: 70px;
             margin-bottom: 20px;
         }
-
         footer p {
-            font-size: 0.9rem;
-            opacity: 0.7;
+            opacity: 0.8;
+            margin-bottom: 8px;
         }
-
         /* --- Responsive Viewports --- */
         @media(max-width: 992px) {
             .hero h1 { font-size: 3rem; }
@@ -651,7 +584,6 @@
             .timeline-block-right { left: 0; }
             .timeline-block-left .timeline-dot, .timeline-block-right .timeline-dot { left: 30px; }
         }
-
         @media(max-width: 600px) {
             .hero h1 { font-size: 2.2rem; }
             .tagline { font-size: 1.2rem; }
@@ -661,67 +593,9 @@
             .nav-links a { margin: 0 10px; }
             .logoimg { height: 90px; }
         }
-
-        /* --- Brevo Custom System Implementation Styling --- */
-        .sib-form-container {
-            background: transparent !important;
-            padding: 0 !important;
-        }
-        .sib-form form {
-            background: transparent !important;
-            padding: 0 !important;
-        }
-        .sib-form .sib-form-block {
-            padding: 0 !important;
-            margin-bottom: 22px !important;
-        }
-        .sib-form .sib-form-block label {
-            display: block !important;
-            margin-bottom: 8px !important;
-            font-family: 'Libre Baskerville', serif !important;
-            font-weight: 700 !important;
-            color: var(--burgundy) !important;
-            font-size: 1rem !important;
-            text-align: left !important;
-        }
-        .sib-form .sib-input, .sib-form select, .sib-form textarea {
-            width: 100% !important;
-            padding: 14px !important;
-            border: 2px solid var(--sand) !important;
-            border-radius: 8px !important;
-            font-family: 'Segoe UI', system-ui, sans-serif !important;
-            font-size: 1rem !important;
-            background: #fff !important;
-            color: var(--dark) !important;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease !important;
-        }
-        .sib-form .sib-input:focus, .sib-form select:focus, .sib-form textarea:focus {
-            outline: none !important;
-            border-color: var(--green) !important;
-            box-shadow: 0 0 0 4px rgba(31, 75, 60, 0.1) !important;
-        }
-        .sib-form button.sib-form-block__button {
-            background: var(--green) !important;
-            color: #fff !important;
-            padding: 16px 38px !important;
-            border-radius: 8px !important;
-            font-family: 'Segoe UI', system-ui, sans-serif !important;
-            font-weight: 700 !important;
-            border: none !important;
-            cursor: pointer !important;
-            font-size: 1rem !important;
-            box-shadow: 0 4px 15px rgba(31, 75, 60, 0.2) !important;
-            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease !important;
-        }
-        .sib-form button.sib-form-block__button:hover {
-            transform: translateY(-4px) !important;
-            background-color: #17382d !important;
-            box-shadow: 0 6px 20px rgba(31, 75, 60, 0.4) !important;
-        }
     </style>
 </head>
 <body>
-
     <header>
         <div class="container nav">
             <img src="images/wiqs-black.png" class="logoimg" alt="WIQS Collective Logo">
@@ -733,7 +607,6 @@
             </nav>
         </div>
     </header>
-
     <section class="hero">
         <div class="container fade-in-up">
             <h1>Excellence in Wellness.<br>Quality in Education.<br>Standards That Matter.</h1>
@@ -755,7 +628,6 @@
             </div>
         </div>
     </section>
-
     <section class="section">
         <div class="container statsgrid">
             <div class="stat fade-in-up">
@@ -772,7 +644,6 @@
             </div>
         </div>
     </section>
-
     <section class="section">
         <div class="container">
             <h2 class="fade-in-left">Why Wellness Leaders Partner With WIQS</h2>
@@ -792,7 +663,6 @@
             </div>
         </div>
     </section>
-
     <section class="section feature-section">
         <div class="container">
             <h2 class="fade-in-left">Nationally Recognised Qualifications</h2>
@@ -809,7 +679,6 @@
             </div>
         </div>
     </section>
-
     <section class="section">
         <div class="container">
             <h2 class="fade-in-left">Wellness Pathway & Scope of Support</h2>
@@ -828,7 +697,6 @@
             </div>
         </div>
     </section>
-
     <section id="leadership" class="section">
         <div class="container">
             <h2 class="fade-in-left">Advancing Wellness Standards Across Australia</h2>
@@ -853,14 +721,12 @@
             </div>
         </div>
     </section>
-
     <section id="timeline" class="section timeline-section">
         <div class="container">
             <h2 class="fade-in-left">The Evolution of Weight Management Education in Australia</h2>
             <p class="timeline-intro fade-in-left">
                 The Australian weight management profession has evolved significantly over the past decade, progressing from practitioner-led education and professional self-regulation to nationally recognised qualifications, quality frameworks, and industry standards. WIQS Collective is proud to continue this legacy as the custodian of Australia's nationally recognised weight management qualifications.
             </p>
-
             <div class="timeline-container">
                 <div class="timeline-block timeline-block-left fade-in-left">
                     <div class="timeline-dot"></div>
@@ -870,7 +736,6 @@
                         <p>Development and delivery of the non-accredited Diploma of Weight Loss Consulting, supporting the emerging profession of weight management consulting in Australia.</p>
                     </div>
                 </div>
-
                 <div class="timeline-block timeline-block-right fade-in-right">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
@@ -879,7 +744,6 @@
                         <p>The industry's Code of Practice receives formal approval, establishing an important benchmark for ethical and professional conduct within the weight management profession.</p>
                     </div>
                 </div>
-
                 <div class="timeline-block timeline-block-left fade-in-left">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
@@ -888,7 +752,6 @@
                         <p>The Certificate IV in Weight Management becomes a nationally recognised qualification, establishing a formal education pathway for practitioners entering the profession.</p>
                     </div>
                 </div>
-
                 <div class="timeline-block timeline-block-right fade-in-right">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
@@ -897,7 +760,6 @@
                         <p>The Diploma of Weight Management achieves national recognition, providing an advanced pathway for practitioners seeking broader skills and industry leadership capabilities.</p>
                     </div>
                 </div>
-
                 <div class="timeline-block timeline-block-left fade-in-left">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
@@ -906,7 +768,6 @@
                         <p>The qualification undergoes a formal renewal process to ensure ongoing relevance, industry alignment, and workforce applicability.</p>
                     </div>
                 </div>
-
                 <div class="timeline-block timeline-block-right fade-in-right">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
@@ -915,7 +776,6 @@
                         <p>The Diploma of Weight Management is renewed following consultation with industry stakeholders and subject matter experts.</p>
                     </div>
                 </div>
-
                 <div class="timeline-block timeline-block-left fade-in-left">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
@@ -924,7 +784,6 @@
                         <p>A significant renewal of the Certificate IV in Weight Management is completed, ensuring continued alignment with contemporary wellness practice, behaviour change principles, and workforce requirements.</p>
                     </div>
                 </div>
-
                 <div class="timeline-block timeline-block-right fade-in-right">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
@@ -934,14 +793,12 @@
                     </div>
                 </div>
             </div>
-
             <div class="card forward-card fade-in-up">
                 <h3>Looking Forward</h3>
                 <p>As the custodian of Australia's nationally recognised weight management qualifications, WIQS Collective is committed to supporting the next phase of industry growth through quality education, professional standards, practitioner support, workforce capability development, and national collaboration.</p>
             </div>
         </div>
     </section>
-
     <section id="about" class="section">
         <div class="container">
             <h2 class="fade-in-left">Meet the Directors</h2>
@@ -961,146 +818,167 @@
                     <div class="director-summary">
                         Laura Thompson is the co-Founder and Director of the Wellness Industry Quality and Standards Collective, committed to advancing professionalism, quality, and consumer confidence across Australia's wellness sector.
                     </div>
+                    
                     <div id="bio-laura" class="bio-wrapper">
                         <div class="bio-text">
-                            <p>With more than 15 years of experience across the community services, health, wellness, and education sectors, Laura has built a career focused on strengthening professional standards, supporting industry growth, and empowering businesses to navigate complex regulatory frameworks.</p>
-                            <p>Throughout her career, Laura has designed and implemented comprehensive business and educational frameworks that foster growth, operational stability, and clear regulatory alignment. Her strategic focus centers on creating robust systems that translate complex educational architectures and scope of practice guidelines into clear, practical, and highly functional pathways for professional workforces.</p>
-                            <p>As an architect of professional capability initiatives, Laura works closely with Registered Training Organisations (RTOs), industry associations, and clinical peak bodies. Her leadership focuses on bridges between clinical healthcare standards and community-based wellness practices, ensuring weight management and lifestyle professionals operate safely, competently, and within an established, transparent scope of practice.</p>
+                            <p>With more than 15 years of experience across the community services, health, wellness, and education sectors, Laura has built a career focused on strengthening professional standards, supporting industry growth, and fostering thriving practitioner communities.</p>
+                            <p>Over the past 12 years Laura has contributed to accredited course development, compliance, quality assurance and qualification renewals. Her work has consistently bridged the gap between complex regulatory requirements and practical, industry-aligned outcomes for students and training organisations alike.</p>
+                            <p>As an advocate for preventative health and evidence-based wellness practices, Laura has driven initiatives that establish clear guidelines for practitioner competencies and ethical client care. Her collaborative approach has brought together stakeholders from diverse disciplines, helping to shape the strategic direction of weight management education in Australia and ensuring qualifications remain progressive and responsive to public health shifts.</p>
                         </div>
                     </div>
-                    <button class="bio-toggle-btn" onclick="toggleBio('laura')">Read Full Bio &rarr;</button>
+                    <button class="bio-toggle-btn" onclick="toggleBio('bio-laura', this)">Read Full Biography ➔</button>
                 </div>
-
                 <!-- Director 2: Shilpa -->
                 <div class="director-card fade-in-up">
                     <img src="images/shilpa-smith.png" alt="Shilpa Smith" class="director-img">
                     <h3>Shilpa Smith</h3>
                     <div class="director-role">Director</div>
                     <div class="director-quals">
-                        Master of Business Administration (MBA)<br>
-                        Bachelor of Technology (BTech)<br>
-                        Diploma of Weight Management<br>
+                        Master of Adult and Vocational Education<br>
+                        Graduate Certificate in Gerontology<br>
+                        Bachelor of Dental Surgery<br>
                         Certificate IV in Training and Assessment
                     </div>
                     <div class="director-summary">
-                        Shilpa Smith is the co-Founder and Director of the Wellness Industry Quality and Standards Collective, dedicated to driving excellence, structural integrity, and sustainable growth across the professional wellness ecosystem.
+                        Shilpa Smith is the co-Founder and Director of the Wellness Industry Quality and Standards Collective, bringing deep expertise in academic governance, compliance, and training design.
                     </div>
+                    
                     <div id="bio-shilpa" class="bio-wrapper">
                         <div class="bio-text">
-                            <p>Shilpa brings over 20 years of international corporate leadership, technology strategy, and operational management experience to the wellness sector. Her background spans large-scale commercial implementations, business transformation initiatives, and the design of high-performing organizational frameworks that ensure quality assurance at scale.</p>
-                            <p>Combining a technical foundation with advanced business strategy, Shilpa focuses on operational governance, resource infrastructure, and the systematic deployment of quality benchmarks. She specializes in optimizing organizational capability, managing large-scale stakeholder networks, and ensuring that professional standards are backed by clear, measurable, and scalable systems.</p>
-                            <p>Shilpa's focus within WIQS Collective is on building enduring partnership frameworks, securing qualification integrity, and spearheading workforce capability developments. By linking business systems with industry standards, she ensures that educational resource delivery, licensing protocols, and compliance architectures remain robust, forward-looking, and aligned with the demands of a rapidly growing national sector.</p>
+                            <p>With over 20 years of experience spanning healthcare, education, regulation and workforce development, Shilpa has built a career focused on improving professional practice and creating high-quality learning pathways.</p>
+                            <p>As Head of Learning for Health and Community Services, Shilpa leads the design and quality assurance of nationally recognised training programs, drawing on her extensive clinical and vocational education background to ensure rigorous educational standards.</p>
+                            <p>Her work emphasizes the integration of clinical evidence with accessible practitioner delivery models. Throughout her career, Shilpa has advised on qualification architecture, assessment validation frameworks, and workforce capability strategies that successfully elevate standard benchmarks across the allied health and preventative wellness sectors.</p>
                         </div>
                     </div>
-                    <button class="bio-toggle-btn" onclick="toggleBio('shilpa')">Read Full Bio &rarr;</button>
+                    <button class="bio-toggle-btn" onclick="toggleBio('bio-shilpa', this)">Read Full Biography ➔</button>
                 </div>
-
             </div>
         </div>
     </section>
-
-    <!-- --- Contact Form Section (Updated with Brevo Integration) --- -->
+    <section class="section">
+        <div class="container">
+            <div class="card fade-in-up">
+                <h2>Licensing Opportunities</h2>
+                <p style="margin-bottom: 25px; font-size: 1.1rem;">
+                    WIQS Collective provides licensing opportunities and support services for organisations seeking to deliver Australia's nationally recognised weight management qualifications.
+                </p>
+                <div class="feature-grid">
+                    <div class="feature-item">Qualification Licensing</div>
+                    <div class="feature-item">Implementation Support</div>
+                    <div class="feature-item">Industry Consultation</div>
+                    <div class="feature-item">Trainer & Assessor Support</div>
+                    <div class="feature-item">Resources and Guidance</div>
+                    <div class="feature-item">Continuous Improvement</div>
+                </div>
+            </div>
+        </div>
+    </section>
     <section id="contact" class="section contact-section">
         <div class="container">
-            <h2 class="fade-in-left">Get in Touch</h2>
-            <div class="contactform fade-in-up">
-                <div id="sib-form-container" class="sib-form-container">
-                    <form id="sib-form" method="POST" action="https://7c3db2aa.sibforms.com/serve/MUIEAMh">
-                        
-                        <div class="form-group sib-form-block">
-                            <label for="FIRSTNAME">First Name</label>
-                            <input type="text" id="FIRSTNAME" name="FIRSTNAME" autocomplete="given-name" placeholder="Your first name" required />
-                        </div>
+            <div class="card contact-card fade-in-up">
+                <h2>Enquire Now</h2>
+                
+                <!-- Brevo Form Integration Layout -->
+                <form action="https://c8ace523.sibforms.com/v2/serve/MUIFAC8oAPTs_30C2Gd95mpceipV9rui52Pa1Nw6UTHPVl6Tb3lbWwGtffSkzzVc30Xiwt9zmWyTtRnKCFV0VDqp8vA2ufCeIVoCdmwJFH9L6L5UaMFqNEs1NAaqO7bstrd2LRVCaIKWwJlydK2cIt9y6vpldTmbmjCWYv1eurocYJQSw0CfUvzmbX-Q76ZEIwWb_p1EgCZCoChfPA==" method="POST" class="contactform">
+                    
+                    <div class="form-group">
+                        <label for="FIRSTNAME">First Name</label>
+                        <input type="text" id="FIRSTNAME" name="FIRSTNAME" required placeholder="Your first name">
+                    </div>
 
-                        <div class="form-group sib-form-block">
-                            <label for="LASTNAME">Last Name</label>
-                            <input type="text" id="LASTNAME" name="LASTNAME" autocomplete="family-name" placeholder="Your last name" required />
-                        </div>
+                    <div class="form-group">
+                        <label for="LASTNAME">Last Name</label>
+                        <input type="text" id="LASTNAME" name="LASTNAME" required placeholder="Your last name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="EMAIL">Email</label>
+                        <input type="email" id="EMAIL" name="EMAIL" required placeholder="Your professional email address">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="SMS">Mobile Phone</label>
+                        <input type="tel" id="SMS" name="SMS" required placeholder="Your contact number">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="INQUIRY_TYPE">Enquiry Type</label>
+                        <select id="INQUIRY_TYPE" name="INQUIRY_TYPE">
+                            <option>General Enquiry</option>
+                            <option>Partnerships</option>
+                            <option>Full Pathway Course Licensing</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="MESSAGE">Tell Us About Your Enquiry</label>
+                        <textarea id="MESSAGE" rows="5" name="MESSAGE" placeholder="Please outline how we can support you..."></textarea>
+                    </div>
 
-                        <div class="form-group sib-form-block">
-                            <label for="EMAIL">Email Address</label>
-                            <input type="email" id="EMAIL" name="EMAIL" autocomplete="email" placeholder="hello@domain.com" required />
-                        </div>
-
-                        <div class="form-group sib-form-block">
-                            <label for="MESSAGE">Message / Enquiry Details</label>
-                            <textarea id="MESSAGE" name="MESSAGE" rows="5" placeholder="How can we help you?" required></textarea>
-                        </div>
-
-                        <div class="sib-form-block" style="text-align: left;">
-                            <button class="sib-form-block__button" form="sib-form" type="submit">Send Enquiry</button>
-                        </div>
-                        
-                    </form>
-                </div>
+                    <!-- Hidden security / setup options required by Brevo standard endpoints -->
+                    <input type="text" name="_gotcha" style="display:none">
+                    
+                    <button type="submit" class="form-submit-btn">Submit Enquiry</button>
+                </form>
             </div>
         </div>
     </section>
-
     <footer>
-        <img src="images/wiqs-white.png" class="footer-logo" alt="WIQS Collective Logo">
-        <p>&copy; 2026 WIQS Collective. All Rights Reserved.</p>
+        <div class="container">
+            <img src="images/wiqs-white.png" class="footer-logo" alt="WIQS Collective Light Logo">
+            <p><strong>Wellness Industry Quality & Standards Collective</strong></p>
+            <p>Advancing standards, safeguarding capability, driving collaboration.</p>
+            <p style="margin-top: 15px; font-size: 0.9rem;">hello@wiqs.com.au</p>
+        </div>
     </footer>
-
-    <!-- --- Interaction and Animation Control Core Logic Script --- -->
     <script>
-        // --- 1. Bio Toggle Action Functions ---
-        function toggleBio(id) {
-            const wrapper = document.getElementById('bio-' + id);
-            const btn = wrapper.nextElementSibling;
-            
+        // --- Biography Accordion Interaction ---
+        function toggleBio(id, btnElement) {
+            const wrapper = document.getElementById(id);
             if (wrapper.classList.contains('open')) {
                 wrapper.classList.remove('open');
-                btn.innerHTML = 'Read Full Bio &rarr;';
+                btnElement.innerHTML = 'Read Full Biography ➔';
             } else {
                 wrapper.classList.add('open');
-                btn.innerHTML = '&larr; Hide Full Bio';
+                btnElement.innerHTML = 'Collapse Biography ✖';
             }
         }
-
-        // --- 2. Counter Intersection Numbers Animator ---
-        const counters = document.querySelectorAll('.counter');
-        const countOptions = { threshold: 0.5, rootMargin: "0px" };
-
-        const counterObserver = new IntersectionObserver(function(entries, observer) {
+        // --- Intersection Observer for Scroll Animations ---
+        const animationObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (!entry.isIntersecting) return;
-                
-                const target = +entry.target.getAttribute('data-target');
-                let count = 0;
-                const speed = target / 40;
-                
-                const updateCount = () => {
-                    count += speed;
-                    if (count < target) {
-                        entry.target.innerText = Math.floor(count) + '+';
-                        setTimeout(updateCount, 20);
-                    } else {
-                        entry.target.innerText = target + '+';
-                    }
-                };
-                
-                updateCount();
-                observer.unobserve(entry.target);
-            });
-        }, countOptions);
-
-        counters.forEach(counter => counterObserver.observe(counter));
-
-        // --- 3. Scroll Layout Animations Trigger Pipeline ---
-        const animItems = document.querySelectorAll('.fade-in-up, .fade-in-left, .fade-in-right');
-        const animOptions = { threshold: 0.15, rootMargin: "0px" };
-
-        const scrollObserver = new IntersectionObserver(function(entries, observer) {
-            entries.forEach(entry => {
-                if(entry.isIntersecting) {
+                if (entry.isIntersecting) {
                     entry.target.classList.add('animate-visible');
-                    observer.unobserve(entry.target);
+                    
+                    // Trigger numeric count logic if this item contains a counter
+                    const counterElement = entry.target.querySelector('.counter');
+                    if (counterElement && !counterElement.classList.contains('counted')) {
+                        runCounter(counterElement);
+                    }
                 }
             });
-        }, animOptions);
-
-        animItems.forEach(item => scrollObserver.observe(item));
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.fade-in-up, .fade-in-left, .fade-in-right').forEach(element => {
+            animationObserver.observe(element);
+        });
+        // --- Numeric Counter Engine ---
+        function runCounter(el) {
+            el.classList.add('counted');
+            const target = +el.getAttribute('data-target');
+            let count = 0;
+            const speed = target / 50; 
+            
+            const updateCount = () => {
+                count += Math.ceil(speed);
+                if (count >= target) {
+                    el.innerText = target + '+';
+                } else {
+                    el.innerText = count + '+';
+                    setTimeout(updateCount, 25);
+                }
+            };
+            updateCount();
+        }
     </script>
 </body>
 </html>
