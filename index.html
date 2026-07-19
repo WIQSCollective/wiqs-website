@@ -160,26 +160,6 @@
             background-color: #17382d;
             box-shadow: 0 6px 20px rgba(31, 75, 60, 0.4);
         }
-        /* --- Form Submit Button Styling Extension --- */
-        .form-submit-btn {
-            background: var(--green);
-            color: #fff;
-            padding: 16px 38px;
-            border: none;
-            border-radius: 8px;
-            font-family: inherit;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            width: 100%;
-            box-shadow: 0 4px 15px rgba(31, 75, 60, 0.2);
-            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        .form-submit-btn:hover {
-            transform: translateY(-4px);
-            background-color: #17382d;
-            box-shadow: 0 6px 20px rgba(31, 75, 60, 0.4);
-        }
         /* --- Qualification Cards --- */
         .qualifications {
             display: grid;
@@ -527,34 +507,11 @@
         .contact-section {
             background: #f0ede6;
         }
-        .contactform {
-            max-width: 750px;
-            margin: auto;
-        }
-        .form-group {
-            margin-bottom: 22px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-family: 'Libre Baskerville', serif;
-            font-weight: 700;
-            color: var(--burgundy);
-        }
-        input, select, textarea {
+        .form-iframe-container {
             width: 100%;
-            padding: 14px;
-            border: 2px solid var(--sand);
-            border-radius: 8px;
-            font-family: inherit;
-            font-size: 1rem;
-            background: #fff;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: var(--green);
-            box-shadow: 0 0 0 4px rgba(31, 75, 60, 0.1);
+            max-width: 540px;
+            margin: auto;
+            overflow: hidden;
         }
         /* --- Footer --- */
         footer {
@@ -876,41 +833,12 @@
     <section id="contact" class="section contact-section">
         <div class="container">
             <div class="card contact-card fade-in-up">
-                <h2>Enquire Now</h2>
+                <h2 style="text-align: center;">Enquire Now</h2>
                 
-                <!-- Brevo Form Integration Layout -->
-                <form action="https://c8ace523.sibforms.com/v2/serve/MUIFAC8oAPTs_30C2Gd95mpceipV9rui52Pa1Nw6UTHPVl6Tb3lbWwGtffSkzzVc30Xiwt9zmWyTtRnKCFV0VDqp8vA2ufCeIVoCdmwJFH9L6L5UaMFqNEs1NAaqO7bstrd2LRVCaIKWwJlydK2cIt9y6vpldTmbmjCWYv1eurocYJQSw0CfUvzmbX-Q76ZEIwWb_p1EgCZCoChfPA==" method="POST" class="contactform">
-                    
-                    <div class="form-group">
-                        <label for="FIRSTNAME">First Name</label>
-                        <input type="text" id="FIRSTNAME" name="FIRSTNAME" required placeholder="Your first name">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="LASTNAME">Last Name</label>
-                        <input type="text" id="LASTNAME" name="LASTNAME" required placeholder="Your last name">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="EMAIL">Email</label>
-                        <input type="email" id="EMAIL" name="EMAIL" required placeholder="Your professional email address">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="SMS">Mobile Phone</label>
-                        <input type="tel" id="SMS" name="SMS" required placeholder="Your contact number">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="MESSAGE">Tell Us About Your Enquiry</label>
-                        <textarea id="MESSAGE" rows="5" name="MESSAGE" placeholder="Please outline how we can support you..."></textarea>
-                    </div>
-
-                    <!-- Hidden security / setup options required by Brevo standard endpoints -->
-                    <input type="text" name="_gotcha" style="display:none">
-                    
-                    <button type="submit" class="form-submit-btn">Submit Enquiry</button>
-                </form>
+                <!-- Brevo Form Embedded via Original Iframe Integration -->
+                <div class="form-iframe-container">
+                    <iframe width="540" height="305" src="https://c8ace523.sibforms.com/v2/serve/MUIFAC8oAPTs_30C2Gd95mpceipV9rui52Pa1Nw6UTHPVl6Tb3lbWwGtffSkzzVc30Xiwt9zmWyTtRnKCFV0VDqp8vA2ufCeIVoCdmwJFH9L6L5UaMFqNEs1NAaqO7bstrd2LRVCaIKWwJlydK2cIt9y6vpldTmbmjCWYv1eurocYJQSw0CfUvzmbX-Q76ZEIwWb_p1EgCZCoChfPA==" frameborder="0" scrolling="auto" allowfullscreen style="display: block; margin-left: auto; margin-right: auto; max-width: 100%;"></iframe>
+                </div>
             </div>
         </div>
     </section>
