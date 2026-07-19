@@ -863,9 +863,38 @@
 
 <!-- Clean Contact Layout Section with Integrated Success Display Elements -->
 <section id="contact" class="section contact-section" style="background: #f0ede6; padding: 100px 0;">
+    
+    <!-- CRITICAL CORE STYLING: Tells the browser how to behave when Brevo toggles states -->
+    <style>
+        :where(.sib-form-message-panel) {
+            display: none;
+        }
+        .sib-form.sib-form--success #sib-container {
+            display: none !important;
+        }
+        .sib-form.sib-form--success #success-message {
+            display: block !important;
+        }
+        .sib-form.sib-form--error #error-message {
+            display: block !important;
+        }
+        .sib-hide-loader-icon {
+            display: none !important;
+        }
+        /* When Brevo script adds loading class, show the spinner */
+        .sib-form-block__button-with-loader.sib-loading .sib-hide-loader-icon {
+            display: inline-block !important;
+            animation: sib-spin 1s linear infinite;
+        }
+        @keyframes sib-spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+
     <div class="container">
         
-        <!-- CRITICAL: Outer wrapper container Brevo's javascript targets to toggle messages -->
+        <!-- Outer wrapper container Brevo's javascript targets to toggle layout visibility -->
         <div class="sib-form">
             <div id="sib-form-container" class="sib-form-container">
                 
@@ -880,12 +909,15 @@
                 </div>
 
                 <!-- Native Brevo Success Alert Box (Hidden by default, styled to match layout) -->
-                <div id="success-message" class="sib-form-message-panel" style="font-family: inherit; font-size:16px; text-align:left; color:#085229; background-color:#e7faf0; border: 1px solid #13ce66; border-radius:6px; max-width:680px; margin: 0 auto 20px auto; padding: 25px 30px; box-shadow: 0 10px 25px rgba(0,0,0,.04);">
-                    <div style="display: flex; align-items: center; gap: 15px;">
-                        <svg viewBox="0 0 512 512" style="width:24px; height:24px; fill:#085229; flex-shrink:0;">
+                <div id="success-message" class="sib-form-message-panel" style="font-family: inherit; font-size:16px; text-align:left; color:#085229; background-color:#e7faf0; border: 1px solid #13ce66; border-radius:6px; max-width:680px; margin: 40px auto; padding: 30px 40px; box-shadow: 0 10px 25px rgba(0,0,0,.06); background: #fff;">
+                    <div style="display: flex; align-items: center; gap: 20px;">
+                        <svg viewBox="0 0 512 512" style="width:32px; height:32px; fill:#085229; flex-shrink:0;">
                             <path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 464c-118.664 0-216-96.055-216-216 0-118.663 96.055-216 216-216 118.664 0 216 96.055 216 216 0 118.663-96.055 216-216 216zm141.63-274.961L217.15 376.071c-4.705 4.667-12.303 4.637-16.97-.068l-85.878-86.572c-4.667-4.705-4.637-12.303.068-16.97l8.52-8.451c4.705-4.667 12.303-4.637 16.97.068l68.976 69.533 163.441-162.13c4.705-4.667 12.303-4.637 16.97.068l8.451 8.52c4.668 4.705 4.637 12.303-.068 16.97z" />
                         </svg>
-                        <span class="sib-form-message-panel__inner-text" style="font-weight: 600; font-size: 1.1rem;">Thank you for your enquiry. We will be in touch with you real soon!</span>
+                        <div>
+                            <h3 style="margin: 0 0 5px 0; font-family: 'Archivo Black', sans-serif; color: var(--burgundy); font-size: 1.5rem;">Submission Successful</h3>
+                            <span class="sib-form-message-panel__inner-text" style="font-size: 1.05rem; color: #555;">Thank you for your enquiry. We will be in touch with you real soon!</span>
+                        </div>
                     </div>
                 </div>
 
@@ -934,10 +966,9 @@
                         <input type="text" name="email_address_check" value="" style="display:none !important;" class="input--hidden">
                         <input type="hidden" name="locale" value="en">
 
-                        <!-- Submit Button with Brevo's Required Engine Hook Classes -->
+                        <!-- Submit Button Element -->
                         <div style="text-align: left;">
                             <button type="submit" class="sib-form-block__button sib-form-block__button-with-loader btn" form="sib-form" style="border: none; cursor: pointer; text-align: center; width: auto; padding: 14px 32px; background: var(--green); color: #fff; font-family: 'Segoe UI', system-ui, sans-serif; font-weight: 700; font-size: 1.1rem; border-radius: 6px; letter-spacing: 0.5px; box-shadow: 0 4px 15px rgba(31, 75, 60, 0.2); transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 10px;">
-                                <!-- The loading spinner icon Brevo targets during script processing -->
                                 <svg class="icon clickable__icon progress-indicator__icon sib-hide-loader-icon" viewBox="0 0 512 512" style="width: 16px; height: 16px; fill: currentColor;">
                                     <path d="M460.116 373.846l-20.823-12.022c-5.541-3.199-7.54-10.159-4.663-15.874 30.137-59.886 28.343-131.652-5.386-189.946-33.641-58.394-94.896-95.833-161.827-99.676C261.028 55.961 256 50.751 256 44.352V20.309c0-6.904 5.808-12.337 12.703-11.982 83.556 4.306 160.163 50.864 202.11 123.677 42.063 72.696 44.079 162.316 6.031 236.832-3.14 6.148-10.75 8.461-16.728 5.01z" />
                                 </svg>
