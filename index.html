@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-    <!-- Brevo Conversations {literal} -->
-<script>
-    (function(d, w, c) {
-        w.BrevoConversationsID = '6a5bfd24c1c4a3c8ec0f8bb9';
-        w[c] = w[c] || function() {
-            (w[c].q = w[c].q || []).push(arguments);
-        };
-        var s = d.createElement('script');
-        s.async = true;
-        s.src = 'https://conversations-widget.brevo.com/brevo-conversations.js';
-        if (d.head) d.head.appendChild(s);
-    })(document, window, 'BrevoConversations');
-</script>
-<!-- /Brevo Conversations {/literal} -->
 <head>
+    <!-- Brevo Conversations {literal} -->
+    <script>
+        (function(d, w, c) {
+            w.BrevoConversationsID = '6a5bfd24c1c4a3c8ec0f8bb9';
+            w[c] = w[c] || function() {
+                (w[c].q = w[c].q || []).push(arguments);
+            };
+            var s = d.createElement('script');
+            s.async = true;
+            s.src = 'https://conversations-widget.brevo.com/brevo-conversations.js';
+            if (d.head) d.head.appendChild(s);
+        })(document, window, 'BrevoConversations');
+    </script>
+    <!-- /Brevo Conversations {/literal} -->
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WIQS Collective | Wellness Industry Quality & Standards</title>
@@ -622,19 +623,19 @@
         /* --- Footer --- */
         footer {
             background: var(--burgundy);
-            color: white;
+            color: #fff;
             text-align: center;
-            padding: 70px 20px;
+            padding: 60px 20px;
         }
 
         .footer-logo {
-            height: 70px;
+            height: 80px;
             margin-bottom: 20px;
         }
 
         footer p {
-            opacity: 0.8;
-            margin-bottom: 8px;
+            font-size: 0.9rem;
+            opacity: 0.7;
         }
 
         /* --- Responsive Viewports --- */
@@ -659,6 +660,63 @@
             .nav-links { margin-top: 15px; }
             .nav-links a { margin: 0 10px; }
             .logoimg { height: 90px; }
+        }
+
+        /* --- Brevo Custom System Implementation Styling --- */
+        .sib-form-container {
+            background: transparent !important;
+            padding: 0 !important;
+        }
+        .sib-form form {
+            background: transparent !important;
+            padding: 0 !important;
+        }
+        .sib-form .sib-form-block {
+            padding: 0 !important;
+            margin-bottom: 22px !important;
+        }
+        .sib-form .sib-form-block label {
+            display: block !important;
+            margin-bottom: 8px !important;
+            font-family: 'Libre Baskerville', serif !important;
+            font-weight: 700 !important;
+            color: var(--burgundy) !important;
+            font-size: 1rem !important;
+            text-align: left !important;
+        }
+        .sib-form .sib-input, .sib-form select, .sib-form textarea {
+            width: 100% !important;
+            padding: 14px !important;
+            border: 2px solid var(--sand) !important;
+            border-radius: 8px !important;
+            font-family: 'Segoe UI', system-ui, sans-serif !important;
+            font-size: 1rem !important;
+            background: #fff !important;
+            color: var(--dark) !important;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease !important;
+        }
+        .sib-form .sib-input:focus, .sib-form select:focus, .sib-form textarea:focus {
+            outline: none !important;
+            border-color: var(--green) !important;
+            box-shadow: 0 0 0 4px rgba(31, 75, 60, 0.1) !important;
+        }
+        .sib-form button.sib-form-block__button {
+            background: var(--green) !important;
+            color: #fff !important;
+            padding: 16px 38px !important;
+            border-radius: 8px !important;
+            font-family: 'Segoe UI', system-ui, sans-serif !important;
+            font-weight: 700 !important;
+            border: none !important;
+            cursor: pointer !important;
+            font-size: 1rem !important;
+            box-shadow: 0 4px 15px rgba(31, 75, 60, 0.2) !important;
+            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease !important;
+        }
+        .sib-form button.sib-form-block__button:hover {
+            transform: translateY(-4px) !important;
+            background-color: #17382d !important;
+            box-shadow: 0 6px 20px rgba(31, 75, 60, 0.4) !important;
         }
     </style>
 </head>
@@ -903,15 +961,14 @@
                     <div class="director-summary">
                         Laura Thompson is the co-Founder and Director of the Wellness Industry Quality and Standards Collective, committed to advancing professionalism, quality, and consumer confidence across Australia's wellness sector.
                     </div>
-                    
                     <div id="bio-laura" class="bio-wrapper">
                         <div class="bio-text">
-                            <p>With more than 15 years of experience across the community services, health, wellness, and education sectors, Laura has built a career focused on strengthening professional standards, supporting industry growth, and fostering thriving practitioner communities.</p>
-                            <p>Over the past 12 years Laura has contributed to accredited course development, compliance, quality assurance and qualification renewals. Her work has consistently bridged the gap between complex regulatory requirements and practical, industry-aligned outcomes for students and training organisations alike.</p>
-                            <p>As an advocate for preventative health and evidence-based wellness practices, Laura has driven initiatives that establish clear guidelines for practitioner competencies and ethical client care. Her collaborative approach has brought together stakeholders from diverse disciplines, helping to shape the strategic direction of weight management education in Australia and ensuring qualifications remain progressive and responsive to public health shifts.</p>
+                            <p>With more than 15 years of experience across the community services, health, wellness, and education sectors, Laura has built a career focused on strengthening professional standards, supporting industry growth, and empowering businesses to navigate complex regulatory frameworks.</p>
+                            <p>Throughout her career, Laura has designed and implemented comprehensive business and educational frameworks that foster growth, operational stability, and clear regulatory alignment. Her strategic focus centers on creating robust systems that translate complex educational architectures and scope of practice guidelines into clear, practical, and highly functional pathways for professional workforces.</p>
+                            <p>As an architect of professional capability initiatives, Laura works closely with Registered Training Organisations (RTOs), industry associations, and clinical peak bodies. Her leadership focuses on bridges between clinical healthcare standards and community-based wellness practices, ensuring weight management and lifestyle professionals operate safely, competently, and within an established, transparent scope of practice.</p>
                         </div>
                     </div>
-                    <button class="bio-toggle-btn" onclick="toggleBio('bio-laura', this)">Read Full Biography ➔</button>
+                    <button class="bio-toggle-btn" onclick="toggleBio('laura')">Read Full Bio &rarr;</button>
                 </div>
 
                 <!-- Director 2: Shilpa -->
@@ -920,144 +977,130 @@
                     <h3>Shilpa Smith</h3>
                     <div class="director-role">Director</div>
                     <div class="director-quals">
-                        Master of Adult and Vocational Education<br>
-                        Graduate Certificate in Gerontology<br>
-                        Bachelor of Dental Surgery<br>
+                        Master of Business Administration (MBA)<br>
+                        Bachelor of Technology (BTech)<br>
+                        Diploma of Weight Management<br>
                         Certificate IV in Training and Assessment
                     </div>
                     <div class="director-summary">
-                        Shilpa Smith is the co-Founder and Director of the Wellness Industry Quality and Standards Collective, bringing deep expertise in academic governance, compliance, and training design.
+                        Shilpa Smith is the co-Founder and Director of the Wellness Industry Quality and Standards Collective, dedicated to driving excellence, structural integrity, and sustainable growth across the professional wellness ecosystem.
                     </div>
-                    
                     <div id="bio-shilpa" class="bio-wrapper">
                         <div class="bio-text">
-                            <p>With over 20 years of experience spanning healthcare, education, regulation and workforce development, Shilpa has built a career focused on improving professional practice and creating high-quality learning pathways.</p>
-                            <p>As Head of Learning for Health and Community Services, Shilpa leads the design and quality assurance of nationally recognised training programs, drawing on her extensive clinical and vocational education background to ensure rigorous educational standards.</p>
-                            <p>Her work emphasizes the integration of clinical evidence with accessible practitioner delivery models. Throughout her career, Shilpa has advised on qualification architecture, assessment validation frameworks, and workforce capability strategies that successfully elevate standard benchmarks across the allied health and preventative wellness sectors.</p>
+                            <p>Shilpa brings over 20 years of international corporate leadership, technology strategy, and operational management experience to the wellness sector. Her background spans large-scale commercial implementations, business transformation initiatives, and the design of high-performing organizational frameworks that ensure quality assurance at scale.</p>
+                            <p>Combining a technical foundation with advanced business strategy, Shilpa focuses on operational governance, resource infrastructure, and the systematic deployment of quality benchmarks. She specializes in optimizing organizational capability, managing large-scale stakeholder networks, and ensuring that professional standards are backed by clear, measurable, and scalable systems.</p>
+                            <p>Shilpa's focus within WIQS Collective is on building enduring partnership frameworks, securing qualification integrity, and spearheading workforce capability developments. By linking business systems with industry standards, she ensures that educational resource delivery, licensing protocols, and compliance architectures remain robust, forward-looking, and aligned with the demands of a rapidly growing national sector.</p>
                         </div>
                     </div>
-                    <button class="bio-toggle-btn" onclick="toggleBio('bio-shilpa', this)">Read Full Biography ➔</button>
+                    <button class="bio-toggle-btn" onclick="toggleBio('shilpa')">Read Full Bio &rarr;</button>
                 </div>
 
             </div>
         </div>
     </section>
 
-    <section class="section">
-        <div class="container">
-            <div class="card fade-in-up">
-                <h2>Licensing Opportunities</h2>
-                <p style="margin-bottom: 25px; font-size: 1.1rem;">
-                    WIQS Collective provides licensing opportunities and support services for organisations seeking to deliver Australia's nationally recognised weight management qualifications.
-                </p>
-                <div class="feature-grid">
-                    <div class="feature-item">Qualification Licensing</div>
-                    <div class="feature-item">Implementation Support</div>
-                    <div class="feature-item">Industry Consultation</div>
-                    <div class="feature-item">Trainer & Assessor Support</div>
-                    <div class="feature-item">Resources and Guidance</div>
-                    <div class="feature-item">Continuous Improvement</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
+    <!-- --- Contact Form Section (Updated with Brevo Integration) --- -->
     <section id="contact" class="section contact-section">
         <div class="container">
-            <div class="card contact-card fade-in-up">
-                <h2>Enquire Now</h2>
-                <form action="https://submit-form.com/P1EVEKp59" method="POST" class="contactform">
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" required placeholder="Your full name">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required placeholder="Your professional email address">
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Phone</label>
-                        <input type="tel" id="phone" name="phone" placeholder="Your contact number">
-                    </div>
-                    <div class="form-group">
-                        <label for="inquiry_type">Enquiry Type</label>
-                        <select id="inquiry_type" name="inquiry_type">
-                            <option>General Enquiry</option>
-                            <option>Partnerships</option>
-                            <option>Full Pathway Course Licensing</option>
-                            <option>Other</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="other_details">Tell Us About Your Enquiry</label>
-                        <textarea id="other_details" rows="5" name="other_details" placeholder="Please outline how we can support you..."></textarea>
-                    </div>
-                    <input type="text" name="_gotcha" style="display:none">
-                    <button type="submit" class="btn" style="border:none; cursor:pointer; width:100%;">Submit Enquiry</button>
-                </form>
+            <h2 class="fade-in-left">Get in Touch</h2>
+            <div class="contactform fade-in-up">
+                <div id="sib-form-container" class="sib-form-container">
+                    <form id="sib-form" method="POST" action="https://7c3db2aa.sibforms.com/serve/MUIEAMh">
+                        
+                        <div class="form-group sib-form-block">
+                            <label for="FIRSTNAME">First Name</label>
+                            <input type="text" id="FIRSTNAME" name="FIRSTNAME" autocomplete="given-name" placeholder="Your first name" required />
+                        </div>
+
+                        <div class="form-group sib-form-block">
+                            <label for="LASTNAME">Last Name</label>
+                            <input type="text" id="LASTNAME" name="LASTNAME" autocomplete="family-name" placeholder="Your last name" required />
+                        </div>
+
+                        <div class="form-group sib-form-block">
+                            <label for="EMAIL">Email Address</label>
+                            <input type="email" id="EMAIL" name="EMAIL" autocomplete="email" placeholder="hello@domain.com" required />
+                        </div>
+
+                        <div class="form-group sib-form-block">
+                            <label for="MESSAGE">Message / Enquiry Details</label>
+                            <textarea id="MESSAGE" name="MESSAGE" rows="5" placeholder="How can we help you?" required></textarea>
+                        </div>
+
+                        <div class="sib-form-block" style="text-align: left;">
+                            <button class="sib-form-block__button" form="sib-form" type="submit">Send Enquiry</button>
+                        </div>
+                        
+                    </form>
+                </div>
             </div>
         </div>
     </section>
 
     <footer>
-        <div class="container">
-            <img src="images/wiqs-white.png" class="footer-logo" alt="WIQS Collective Light Logo">
-            <p><strong>Wellness Industry Quality & Standards Collective</strong></p>
-            <p>Advancing standards, safeguarding capability, driving collaboration.</p>
-            <p style="margin-top: 15px; font-size: 0.9rem;">hello@wiqs.com.au</p>
-        </div>
+        <img src="images/wiqs-white.png" class="footer-logo" alt="WIQS Collective Logo">
+        <p>&copy; 2026 WIQS Collective. All Rights Reserved.</p>
     </footer>
 
+    <!-- --- Interaction and Animation Control Core Logic Script --- -->
     <script>
-        // --- Biography Accordion Interaction ---
-        function toggleBio(id, btnElement) {
-            const wrapper = document.getElementById(id);
+        // --- 1. Bio Toggle Action Functions ---
+        function toggleBio(id) {
+            const wrapper = document.getElementById('bio-' + id);
+            const btn = wrapper.nextElementSibling;
+            
             if (wrapper.classList.contains('open')) {
                 wrapper.classList.remove('open');
-                btnElement.innerHTML = 'Read Full Biography ➔';
+                btn.innerHTML = 'Read Full Bio &rarr;';
             } else {
                 wrapper.classList.add('open');
-                btnElement.innerHTML = 'Collapse Biography ✖';
+                btn.innerHTML = '&larr; Hide Full Bio';
             }
         }
 
-        // --- Intersection Observer for Scroll Animations ---
-        const animationObserver = new IntersectionObserver((entries) => {
+        // --- 2. Counter Intersection Numbers Animator ---
+        const counters = document.querySelectorAll('.counter');
+        const countOptions = { threshold: 0.5, rootMargin: "0px" };
+
+        const counterObserver = new IntersectionObserver(function(entries, observer) {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate-visible');
-                    
-                    // Trigger numeric count logic if this item contains a counter
-                    const counterElement = entry.target.querySelector('.counter');
-                    if (counterElement && !counterElement.classList.contains('counted')) {
-                        runCounter(counterElement);
+                if (!entry.isIntersecting) return;
+                
+                const target = +entry.target.getAttribute('data-target');
+                let count = 0;
+                const speed = target / 40;
+                
+                const updateCount = () => {
+                    count += speed;
+                    if (count < target) {
+                        entry.target.innerText = Math.floor(count) + '+';
+                        setTimeout(updateCount, 20);
+                    } else {
+                        entry.target.innerText = target + '+';
                     }
+                };
+                
+                updateCount();
+                observer.unobserve(entry.target);
+            });
+        }, countOptions);
+
+        counters.forEach(counter => counterObserver.observe(counter));
+
+        // --- 3. Scroll Layout Animations Trigger Pipeline ---
+        const animItems = document.querySelectorAll('.fade-in-up, .fade-in-left, .fade-in-right');
+        const animOptions = { threshold: 0.15, rootMargin: "0px" };
+
+        const scrollObserver = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('animate-visible');
+                    observer.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.15 });
+        }, animOptions);
 
-        document.querySelectorAll('.fade-in-up, .fade-in-left, .fade-in-right').forEach(element => {
-            animationObserver.observe(element);
-        });
-
-        // --- Numeric Counter Engine ---
-        function runCounter(el) {
-            el.classList.add('counted');
-            const target = +el.getAttribute('data-target');
-            let count = 0;
-            const speed = target / 50; 
-            
-            const updateCount = () => {
-                count += Math.ceil(speed);
-                if (count >= target) {
-                    el.innerText = target + '+';
-                } else {
-                    el.innerText = count + '+';
-                    setTimeout(updateCount, 25);
-                }
-            };
-            updateCount();
-        }
+        animItems.forEach(item => scrollObserver.observe(item));
     </script>
 </body>
 </html>
