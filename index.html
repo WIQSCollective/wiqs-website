@@ -913,14 +913,89 @@
 <script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
+<!-- Load the Cloudflare Turnstile API Asset -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+<script>
+  // Simple token router mapping Turnstile to what the backend expects
+  function handleCaptchaResponse(token) {
+    var recaptchaInput = document.getElementById('g-recaptcha-response');
+    if (recaptchaInput) {
+      recaptchaInput.value = token;
+    }
+  }
+
+  // Intercept the submit event directly using standard forms handling
+  document.addEventListener('DOMContentLoaded', function() {
+    var form = document.getElementById('sib-form');
+    if (!form) return;
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault(); // Stop page redirect/reload completely
+
+      var submitBtn = form.querySelector('button[type="submit"]');
+      var errorPanel = document.getElementById('error-message');
+      var successPanel = document.getElementById('success-message');
+      
+      // Reset visible panels
+      errorPanel.style.display = 'none';
+      successPanel.style.display = 'none';
+      
+      // Show internal processing state if loader classes exist
+      if (submitBtn) submitBtn.classList.add('sib-loading');
+
+      // Convert Form data directly to URL-encoded parameters so Brevo parses it cleanly
+      var formData = new FormData(form);
+      var urlEncodedData = new URLSearchParams(formData).toString();
+
+      fetch(form.action, {
+        method: 'POST',
+        body: urlEncodedData,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json'
+        }
+      })
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        if (submitBtn) submitBtn.classList.remove('sib-loading');
+        
+        if (data.success) {
+          // Display the inline success message smoothly underneath the button
+          successPanel.style.display = 'block';
+          form.reset();
+          
+          // Safely reset the turnstile checkbox widget state
+          if (typeof window.turnstile !== 'undefined') {
+            window.turnstile.reset('#sib-captcha');
+          }
+        } else {
+          // Parse server errors inline
+          errorPanel.style.display = 'block';
+          var errorText = errorPanel.querySelector('.sib-form-message-panel__inner-text');
+          if (errorText && data.errors && data.errors['cf-turnstile-response']) {
+            errorText.textContent = "Security verification failed. Please check the tick box again.";
+          } else if (errorText && data.errors && data.errors.message) {
+            errorText.textContent = data.errors.message;
+          } else if (errorText && data.message) {
+            errorText.textContent = data.message;
+          }
+        }
+      })
+      .catch(function(error) {
+        if (submitBtn) submitBtn.classList.remove('sib-loading');
+        errorPanel.style.display = 'block';
+      });
+    });
+  });
+</script>
+
 <!-- Clean Contact Layout Section -->
 <section id="contact" class="section contact-section" style="background: #f0ede6; padding: 100px 0;">
     
     <style>
-        /* Keep everything flowing smoothly in a single vertical stack */
-        :where(.sib-form-message-panel) {
-            display: none !important;
-        }
         .sib-hide-loader-icon {
             display: none !important;
         }
@@ -959,7 +1034,6 @@
     </style>
 
     <div class="container">
-        
         <div class="sib-form">
             <div id="sib-form-container" class="sib-form-container">
 
@@ -967,49 +1041,43 @@
                 <div id="sib-container" class="card contact-card fade-in-up" style="max-width: 680px; margin: 0 auto; padding: 50px 50px; background: #fff; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,.06); border: none;">
                     <h2 style="text-align: left; margin-bottom: 35px; font-family: 'Archivo Black', sans-serif; color: var(--burgundy); font-size: 2.5rem;">Enquire Now</h2>
                     
-                    <form id="sib-form" method="POST" action="https://c8ace523.sibforms.com/serve/MUIFAC8oAPTs_30C2Gd95mpceipV9rui52Pa1Nw6UTHPVl6Tb3lbWwGtffSkzzVc30Xiwt9zmWyTtRnKCFV0VDqp8vA2ufCeIVoCdmwJFH9L6L5UaMFqNEs1NAaqO7bstrd2LRVCaIKWwJlydK2cIt9y6vpldTmbmjCWYv1eurocYJQSw0CfUvzmbX-Q76ZEIwWb_p1EgCZCoChfPA==" data-type="subscription" style="display: flex; flex-direction: column; gap: 24px;">
+                    <form id="sib-form" method="POST" action="https://c8ace523.sibforms.com/serve/MUIFAC8oAPTs_30C2Gd95mpceipV9rui52Pa1Nw6UTHPVl6Tb3lbWwGtffSkzzVc30Xiwt9zmWyTtRnKCFV0VDqp8vA2ufCeIVoCdmwJFH9L6L5UaMFqNEs1NAaqO7bstrd2LRVCaIKWwJlydK2cIt9y6vpldTmbmjCWYv1eurocYJQSw0CfUvzmbX-Q76ZEIwWb_p1EgCZCoChfPA==" style="display: flex; flex-direction: column; gap: 24px;">
                         
                         <!-- First Name -->
                         <div class="form-entry-wrapper" style="display: flex; flex-direction: column; gap: 8px;">
                             <label style="font-weight: 700; color: var(--burgundy); font-size: 1.15rem; font-family: 'Segoe UI', system-ui, sans-serif;" for="FIRSTNAME">First Name<span style="color: #e04b4b; margin-left: 2px;">*</span></label>
-                            <input type="text" id="FIRSTNAME" name="FIRSTNAME" maxlength="200" autocomplete="off" data-required="true" required style="width: 100%; padding: 14px 12px; border: 1px solid var(--sand); border-radius: 4px; background: #fff; font-size: 1rem; font-family: inherit; color: var(--dark);">
+                            <input type="text" id="FIRSTNAME" name="FIRSTNAME" maxlength="200" autocomplete="off" required style="width: 100%; padding: 14px 12px; border: 1px solid var(--sand); border-radius: 4px; background: #fff; font-size: 1rem; font-family: inherit; color: var(--dark);">
                         </div>
 
                         <!-- Last Name -->
                         <div class="form-entry-wrapper" style="display: flex; flex-direction: column; gap: 8px;">
                             <label style="font-weight: 700; color: var(--burgundy); font-size: 1.15rem; font-family: 'Segoe UI', system-ui, sans-serif;" for="LASTNAME">Last Name<span style="color: #e04b4b; margin-left: 2px;">*</span></label>
-                            <input type="text" id="LASTNAME" name="LASTNAME" maxlength="200" autocomplete="off" data-required="true" required style="width: 100%; padding: 14px 12px; border: 1px solid var(--sand); border-radius: 4px; background: #fff; font-size: 1rem; font-family: inherit; color: var(--dark);">
+                            <input type="text" id="LASTNAME" name="LASTNAME" maxlength="200" autocomplete="off" required style="width: 100%; padding: 14px 12px; border: 1px solid var(--sand); border-radius: 4px; background: #fff; font-size: 1rem; font-family: inherit; color: var(--dark);">
                         </div>
 
                         <!-- Email -->
                         <div class="form-entry-wrapper" style="display: flex; flex-direction: column; gap: 8px;">
                             <label style="font-weight: 700; color: var(--burgundy); font-size: 1.15rem; font-family: 'Segoe UI', system-ui, sans-serif;" for="EMAIL">Email<span style="color: #e04b4b; margin-left: 2px;">*</span></label>
-                            <input type="text" id="EMAIL" name="EMAIL" autocomplete="off" data-required="true" required style="width: 100%; padding: 14px 12px; border: 1px solid var(--sand); border-radius: 4px; background: #fff; font-size: 1rem; font-family: inherit; color: var(--dark);">
+                            <input type="email" id="EMAIL" name="EMAIL" autocomplete="off" required style="width: 100%; padding: 14px 12px; border: 1px solid var(--sand); border-radius: 4px; background: #fff; font-size: 1rem; font-family: inherit; color: var(--dark);">
                         </div>
 
-                        <!-- Native SMS Engine Field Wrapper -->
+                        <!-- Mobile Number Dropdown & Digits entry -->
                         <div class="form-entry-wrapper" style="display: flex; flex-direction: column; gap: 8px;">
                             <label style="font-weight: 700; color: var(--burgundy); font-size: 1.15rem; font-family: 'Segoe UI', system-ui, sans-serif;" for="SMS">Mobile Number<span style="color: #e04b4b; margin-left: 2px;">*</span></label>
                             
-                            <div class="sib-sms-field sib-form-block" style="width: 100%;">
+                            <div class="sib-sms-field" style="width: 100%;">
                                 <div class="sib-sms-input-wrapper" style="direction:ltr;">
-                                    <div class="sib-sms-input" data-placeholder="" data-required="true" data-country-code="AU" data-value="" data-attributename="SMS" style="display: flex; gap: 10px; width: 100%;">
-                                        
-                                        <!-- Code Picker Dropdown -->
-                                        <select class="input" name="SMS__COUNTRY_CODE" data-required="true" required>
-                                            <option value="+61" selected>+61 AU</option>
-                                            <option value="+1">+1 US/CA</option>
-                                            <option value="+44">+44 UK</option>
-                                            <option value="+64">+64 NZ</option>
-                                            <option value="+91">+91 IN</option>
-                                            <option value="+27">+27 ZA</option>
-                                            <option value="+33">+33 FR</option>
-                                            <option value="+49">+49 DE</option>
-                                        </select>
-                                        
-                                        <!-- Main Digits Entry Input -->
-                                        <input class="input" type="text" name="SMS" autocomplete="off" data-required="true" required style="flex-grow: 1;">
-                                    </div>
+                                    <select class="input" name="SMS__COUNTRY_CODE" required>
+                                        <option value="+61" selected>+61 AU</option>
+                                        <option value="+1">+1 US/CA</option>
+                                        <option value="+44">+44 UK</option>
+                                        <option value="+64">+64 NZ</option>
+                                        <option value="+91">+91 IN</option>
+                                        <option value="+27">+27 ZA</option>
+                                        <option value="+33">+33 FR</option>
+                                        <option value="+49">+49 DE</option>
+                                    </select>
+                                    <input class="input" type="tel" id="SMS" name="SMS" autocomplete="off" required style="flex-grow: 1;">
                                 </div>
                             </div>
                         </div>
@@ -1020,24 +1088,26 @@
                             <textarea id="ENQUIRY_MESSAGE" name="ENQUIRY_MESSAGE" rows="4" maxlength="500" autocomplete="off" style="width: 100%; padding: 14px 12px; border: 1px solid var(--sand); border-radius: 4px; background: #fff; font-size: 1rem; font-family: inherit; color: var(--dark); resize: vertical;"></textarea>
                         </div>
 
-                        <!-- Visual Checkbox Captcha Container Layout -->
+                        <!-- Visible Interactive Checkbox Captcha Component -->
                         <div class="captcha-container" style="margin: 5px 0 10px 0; max-width: 300px; display: block; text-align: left;">
-                            <div class="cf-turnstile g-recaptcha" 
+                            <div class="cf-turnstile" 
                                  data-sitekey="0x4AAAAAAD4ufL4HE4GXnijt" 
                                  id="sib-captcha" 
                                  data-callback="handleCaptchaResponse" 
                                  data-appearance="always" 
                                  data-language="en"></div>
+                            
+                            <!-- Stores token value parsed by Brevo's endpoint -->
                             <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
                         </div>
 
-                        <!-- Hidden Anti-Spam Tokens -->
-                        <input type="text" name="email_address_check" value="" style="display:none !important;" class="input--hidden">
+                        <!-- Anti-Spam Hidden Variables -->
+                        <input type="text" name="email_address_check" value="" style="display:none !important;">
                         <input type="hidden" name="locale" value="en">
 
-                        <!-- Submit Button Element -->
+                        <!-- Submit CTA controls -->
                         <div style="text-align: left;">
-                            <button type="submit" class="sib-form-block__button sib-form-block__button-with-loader btn" form="sib-form" style="border: none; cursor: pointer; text-align: center; width: auto; padding: 14px 32px; background: var(--green); color: #fff; font-family: 'Segoe UI', system-ui, sans-serif; font-weight: 700; font-size: 1.1rem; border-radius: 6px; letter-spacing: 0.5px; box-shadow: 0 4px 15px rgba(31, 75, 60, 0.2); transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 10px;">
+                            <button type="submit" class="sib-form-block__button sib-form-block__button-with-loader btn" style="border: none; cursor: pointer; text-align: center; width: auto; padding: 14px 32px; background: var(--green); color: #fff; font-family: 'Segoe UI', system-ui, sans-serif; font-weight: 700; font-size: 1.1rem; border-radius: 6px; letter-spacing: 0.5px; box-shadow: 0 4px 15px rgba(31, 75, 60, 0.2); transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 10px;">
                                 <svg class="icon clickable__icon progress-indicator__icon sib-hide-loader-icon" viewBox="0 0 512 512" style="width: 16px; height: 16px; fill: currentColor;">
                                     <path d="M460.116 373.846l-20.823-12.022c-5.541-3.199-7.54-10.159-4.663-15.874 30.137-59.886 28.343-131.652-5.386-189.946-33.641-58.394-94.896-95.833-161.827-99.676C261.028 55.961 256 50.751 256 44.352V20.309c0-6.904 5.808-12.337 12.703-11.982 83.556 4.306 160.163 50.864 202.11 123.677 42.063 72.696 44.079 162.316 6.031 236.832-3.14 6.148-10.75 8.461-16.728 5.01z" />
                                 </svg>
@@ -1045,7 +1115,7 @@
                             </button>
                         </div>
 
-                        <!-- SUCCESS ALERT BOX: Renders natively under button controls -->
+                        <!-- SUCCESS NOTIFICATION MODULE: Renders cleanly inside layout beneath submit elements -->
                         <div id="success-message" style="display: none; font-family: inherit; font-size:15px; text-align:left; color:#085229; background-color:#e7faf0; border: 1px solid #13ce66; border-radius:6px; width: 100%; margin: 10px 0 0 0; padding: 15px 20px;">
                             <div style="display: flex; align-items: center; gap: 12px;">
                                 <svg viewBox="0 0 512 512" style="width:18px; height:18px; fill:#085229; flex-shrink:0;">
@@ -1055,7 +1125,7 @@
                             </div>
                         </div>
 
-                        <!-- Error Alert Window Area -->
+                        <!-- ERROR DISPLAY WINDOW -->
                         <div id="error-message" style="display: none; font-family: inherit; font-size:15px; text-align:left; color:#661d1d; background-color:#ffeded; border: 1px solid #ff4949; border-radius:6px; width: 100%; margin: 10px 0 0 0; padding: 15px 20px;">
                             <div style="display: flex; align-items: center; gap: 12px;">
                                 <svg viewBox="0 0 512 512" style="width:18px; height:18px; fill:#661d1d; flex-shrink:0;">
@@ -1067,7 +1137,7 @@
 
                     </form>
 
-                    <!-- Brevo Compliance Footer Notice -->
+                    <!-- Brevo Platform Footer -->
                     <div class="form-compliance" style="display: flex; align-items: flex-start; gap: 20px; margin-top: 35px; padding-top: 25px; border-top: 1px solid var(--sand);">
                         <div class="compliance-logo" style="flex-shrink: 0; width: 55px; height: 55px;">
                             <svg viewBox="0 0 100 100" style="width: 100%; height: 100%;">
@@ -1084,7 +1154,6 @@
 
             </div>
         </div>
-        
     </div>
 </section>
     <footer>
