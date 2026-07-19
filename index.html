@@ -851,13 +851,15 @@
   };
   var AUTOHIDE = Boolean(0);
 
-  // FIXED CAPTCHA ROUTER: Explicitly binds the Turnstile response value into Brevo's expectation payload
+  // CORRECTED CAPTCHA ENGINE: Maps the verification token to both variables to satisfy Brevo's architecture
   function handleCaptchaResponse(token) {
-    var captchaInput = document.getElementById('g-recaptcha-response');
-    if (captchaInput) {
-      captchaInput.value = token;
-    }
-    // Fire event for Brevo's internal form state machine
+    var turnstileInput = document.getElementById('cf-turnstile-response');
+    var recaptchaInput = document.getElementById('g-recaptcha-response');
+    
+    if (turnstileInput) turnstileInput.value = token;
+    if (recaptchaInput) recaptchaInput.value = token;
+
+    // Trigger state refresh for Brevo validation engine
     var event = new Event('captchaChange');
     document.getElementById('sib-captcha').dispatchEvent(event);
     window.grecaptcha = window.turnstile;
@@ -869,7 +871,7 @@
 <!-- Clean Contact Layout Section with Integrated Success Display Elements -->
 <section id="contact" class="section contact-section" style="background: #f0ede6; padding: 100px 0;">
     
-    <!-- CORE STYLING: Tells the browser how to behave when Brevo toggles success states -->
+    <!-- CORE STYLING: Handles message reveals and layout structure updates -->
     <style>
         :where(.sib-form-message-panel) {
             display: none;
@@ -880,7 +882,6 @@
         .sib-form.sib-form--success #success-message {
             display: block !important;
         }
-        /* Make error message visible when the form framework encounters an issue */
         .sib-form.sib-form--error #error-message {
             display: block !important;
         }
@@ -923,11 +924,10 @@
 
     <div class="container">
         
-        <!-- Outer wrapper container Brevo's javascript targets to toggle layout visibility -->
         <div class="sib-form">
             <div id="sib-form-container" class="sib-form-container">
 
-                <!-- Success Alert Box (Kept outside the main card layout so it prints beautifully upon form completion) -->
+                <!-- Success Alert Box (Kept external to form layout card block) -->
                 <div id="success-message" class="sib-form-message-panel" style="font-family: inherit; font-size:16px; text-align:left; color:#085229; background-color:#e7faf0; border: 1px solid #13ce66; border-radius:6px; max-width:680px; margin: 40px auto; padding: 30px 40px; box-shadow: 0 10px 25px rgba(0,0,0,.06); background: #fff;">
                     <div style="display: flex; align-items: center; gap: 20px;">
                         <svg viewBox="0 0 512 512" style="width:32px; height:32px; fill:#085229; flex-shrink:0;">
@@ -1000,7 +1000,8 @@
                         <!-- Cloudflare Turnstile Integration Container -->
                         <div class="captcha-container" style="margin: 5px 0 10px 0; max-width: 300px; display: block; text-align: left;">
                             <div class="cf-turnstile g-recaptcha" data-sitekey="0x4AAAAAAD4ufL4HE4GXnijt" id="sib-captcha" data-callback="handleCaptchaResponse" data-language="en"></div>
-                            <!-- Hidden input field injected for Brevo's engine to catch and pass on back-end submission validation -->
+                            <!-- Hidden inputs mapped precisely to both potential target parameter layouts -->
+                            <input type="hidden" name="cf-turnstile-response" id="cf-turnstile-response">
                             <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
                         </div>
 
@@ -1018,7 +1019,7 @@
                             </button>
                         </div>
 
-                        <!-- NATIVE BREVO ERROR BOX: Relocated directly beneath Submit inside the wrapper flow -->
+                        <!-- ERROR DISPLAY CONTAINER: Appears inline underneath the main trigger controls -->
                         <div id="error-message" class="sib-form-message-panel" style="font-family: inherit; font-size:15px; text-align:left; color:#661d1d; background-color:#ffeded; border: 1px solid #ff4949; border-radius:6px; width: 100%; margin: 10px 0 0 0; padding: 15px 20px;">
                             <div style="display: flex; align-items: center; gap: 12px;">
                                 <svg viewBox="0 0 512 512" style="width:18px; height:18px; fill:#661d1d; flex-shrink:0;">
