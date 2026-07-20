@@ -851,17 +851,13 @@
   };
   var AUTOHIDE = Boolean(0);
 
-  // 1. THE TURNSTILE CALLBACK: Instantly populates DOM inputs when Cloudflare finishes verification
+  // 1. CLOUDFLARE TURNSTILE BRIDGE ENGINE
+  // Explicitly binds Turnstile tokens back into Brevo's expected reCAPTCHA structures
   function handleCaptchaResponse(token) {
-    var inputs = ['cf-turnstile-response', 'g-recaptcha-response', 'captcha'];
-    inputs.forEach(function(id) {
-      var element = document.getElementById(id);
-      if (element) {
-        element.value = token;
-      }
-    });
-
-    // Fire the custom event Brevo listens for to reset field states
+    var recaptchaInput = document.getElementById('g-recaptcha-response');
+    if (recaptchaInput) {
+      recaptchaInput.value = token;
+    }
     var event = new Event('captchaChange');
     var captchaContainer = document.getElementById('sib-captcha');
     if (captchaContainer) {
@@ -869,30 +865,21 @@
     }
   }
 
-  // 2. THE CAPTCHA API SPOOF: Forces Brevo's local script checks to resolve successfully
-  window.grecaptcha = {
-    execute: function() {
-      if (typeof window.turnstile !== 'undefined') {
-        return window.turnstile.getResponse();
-      }
-      var fallback = document.getElementById('g-recaptcha-response');
-      return fallback ? fallback.value : '';
-    },
-    getResponse: function() {
-      if (typeof window.turnstile !== 'undefined') {
-        return window.turnstile.getResponse();
-      }
-      var fallback = document.getElementById('g-recaptcha-response');
-      return fallback ? fallback.value : '';
-    },
-    render: function(container, options) {
-      // Prevents crash if Brevo tries to manually draw a recaptcha box
-      return null;
-    }
-  };
-
-  // 3. THE COMPLETE NETWORK INTERCEPT: Captures the payload, injects data types, and intercepts UI panels
+  // 2. GLOBAL INTERCEPT & COMPATIBILITY ENGINE
   (function() {
+    // Inject Turnstile API alias immediately so Brevo's main.js script doesn't crash on load
+    window.grecaptcha = {
+      execute: function() {
+        if (typeof window.turnstile !== 'undefined') {
+          window.turnstile.execute('#sib-captcha');
+        }
+      },
+      ready: function(callback) {
+        callback();
+      }
+    };
+
+    // Capture Brevo's native AJAX responses safely
     var originalOpen = XMLHttpRequest.prototype.open;
     var originalSend = XMLHttpRequest.prototype.send;
 
@@ -903,33 +890,6 @@
 
     XMLHttpRequest.prototype.send = function(body) {
       if (this._url && this._url.includes('sibforms.com/serve/')) {
-        
-        // Grab the active token directly from Cloudflare's runtime engine
-        var activeToken = '';
-        if (typeof window.turnstile !== 'undefined') {
-          activeToken = window.turnstile.getResponse();
-        }
-        if (!activeToken) {
-          var inputFallback = document.getElementById('g-recaptcha-response');
-          if (inputFallback) activeToken = inputFallback.value;
-        }
-
-        // Force injection whether the data is sent via standard FormData or key/value strings
-        if (activeToken) {
-          if (body instanceof FormData) {
-            body.set('g-recaptcha-response', activeToken);
-            body.set('captcha', activeToken);
-            body.set('cf-turnstile-response', activeToken);
-          } else if (typeof body === 'string') {
-            var params = new URLSearchParams(body);
-            params.set('g-recaptcha-response', activeToken);
-            params.set('captcha', activeToken);
-            params.set('cf-turnstile-response', activeToken);
-            body = params.toString();
-          }
-        }
-
-        // Handle success display seamlessly without full page refreshes
         this.addEventListener('load', function() {
           try {
             var data = JSON.parse(this.responseText);
@@ -957,7 +917,9 @@
                 }
               }
             }
-          } catch (e) {}
+          } catch (e) {
+            // Silently fall back if the response isn't standard JSON
+          }
         });
       }
       return originalSend.apply(this, arguments);
@@ -972,6 +934,10 @@
 <section id="contact" class="section contact-section" style="background: #f0ede6; padding: 100px 0;">
     
     <style>
+        /* Keep everything flowing smoothly in a single vertical stack */
+        :where(.sib-form-message-panel) {
+            display: none !important;
+        }
         .sib-hide-loader-icon {
             display: none !important;
         }
@@ -1010,6 +976,7 @@
     </style>
 
     <div class="container">
+        
         <div class="sib-form">
             <div id="sib-form-container" class="sib-form-container">
 
@@ -1017,43 +984,49 @@
                 <div id="sib-container" class="card contact-card fade-in-up" style="max-width: 680px; margin: 0 auto; padding: 50px 50px; background: #fff; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,.06); border: none;">
                     <h2 style="text-align: left; margin-bottom: 35px; font-family: 'Archivo Black', sans-serif; color: var(--burgundy); font-size: 2.5rem;">Enquire Now</h2>
                     
-                    <form id="sib-form" method="POST" action="https://c8ace523.sibforms.com/serve/MUIFAC8oAPTs_30C2Gd95mpceipV9rui52Pa1Nw6UTHPVl6Tb3lbWwGtffSkzzVc30Xiwt9zmWyTtRnKCFV0VDqp8vA2ufCeIVoCdmwJFH9L6L5UaMFqNEs1NAaqO7bstrd2LRVCaIKWwJlydK2cIt9y6vpldTmbmjCWYv1eurocYJQSw0CfUvzmbX-Q76ZEIwWb_p1EgCZCoChfPA==" style="display: flex; flex-direction: column; gap: 24px;">
+                    <form id="sib-form" method="POST" action="https://c8ace523.sibforms.com/serve/MUIFAC8oAPTs_30C2Gd95mpceipV9rui52Pa1Nw6UTHPVl6Tb3lbWwGtffSkzzVc30Xiwt9zmWyTtRnKCFV0VDqp8vA2ufCeIVoCdmwJFH9L6L5UaMFqNEs1NAaqO7bstrd2LRVCaIKWwJlydK2cIt9y6vpldTmbmjCWYv1eurocYJQSw0CfUvzmbX-Q76ZEIwWb_p1EgCZCoChfPA==" data-type="subscription" style="display: flex; flex-direction: column; gap: 24px;">
                         
                         <!-- First Name -->
                         <div class="form-entry-wrapper" style="display: flex; flex-direction: column; gap: 8px;">
                             <label style="font-weight: 700; color: var(--burgundy); font-size: 1.15rem; font-family: 'Segoe UI', system-ui, sans-serif;" for="FIRSTNAME">First Name<span style="color: #e04b4b; margin-left: 2px;">*</span></label>
-                            <input type="text" id="FIRSTNAME" name="FIRSTNAME" maxlength="200" autocomplete="off" required style="width: 100%; padding: 14px 12px; border: 1px solid var(--sand); border-radius: 4px; background: #fff; font-size: 1rem; font-family: inherit; color: var(--dark);">
+                            <input type="text" id="FIRSTNAME" name="FIRSTNAME" maxlength="200" autocomplete="off" data-required="true" required style="width: 100%; padding: 14px 12px; border: 1px solid var(--sand); border-radius: 4px; background: #fff; font-size: 1rem; font-family: inherit; color: var(--dark);">
                         </div>
 
                         <!-- Last Name -->
                         <div class="form-entry-wrapper" style="display: flex; flex-direction: column; gap: 8px;">
                             <label style="font-weight: 700; color: var(--burgundy); font-size: 1.15rem; font-family: 'Segoe UI', system-ui, sans-serif;" for="LASTNAME">Last Name<span style="color: #e04b4b; margin-left: 2px;">*</span></label>
-                            <input type="text" id="LASTNAME" name="LASTNAME" maxlength="200" autocomplete="off" required style="width: 100%; padding: 14px 12px; border: 1px solid var(--sand); border-radius: 4px; background: #fff; font-size: 1rem; font-family: inherit; color: var(--dark);">
+                            <input type="text" id="LASTNAME" name="LASTNAME" maxlength="200" autocomplete="off" data-required="true" required style="width: 100%; padding: 14px 12px; border: 1px solid var(--sand); border-radius: 4px; background: #fff; font-size: 1rem; font-family: inherit; color: var(--dark);">
                         </div>
 
                         <!-- Email -->
                         <div class="form-entry-wrapper" style="display: flex; flex-direction: column; gap: 8px;">
                             <label style="font-weight: 700; color: var(--burgundy); font-size: 1.15rem; font-family: 'Segoe UI', system-ui, sans-serif;" for="EMAIL">Email<span style="color: #e04b4b; margin-left: 2px;">*</span></label>
-                            <input type="email" id="EMAIL" name="EMAIL" autocomplete="off" required style="width: 100%; padding: 14px 12px; border: 1px solid var(--sand); border-radius: 4px; background: #fff; font-size: 1rem; font-family: inherit; color: var(--dark);">
+                            <input type="text" id="EMAIL" name="EMAIL" autocomplete="off" data-required="true" required style="width: 100%; padding: 14px 12px; border: 1px solid var(--sand); border-radius: 4px; background: #fff; font-size: 1rem; font-family: inherit; color: var(--dark);">
                         </div>
 
-                        <!-- Mobile Number Dropdown & Digits entry -->
+                        <!-- Native SMS Engine Field Wrapper -->
                         <div class="form-entry-wrapper" style="display: flex; flex-direction: column; gap: 8px;">
                             <label style="font-weight: 700; color: var(--burgundy); font-size: 1.15rem; font-family: 'Segoe UI', system-ui, sans-serif;" for="SMS">Mobile Number<span style="color: #e04b4b; margin-left: 2px;">*</span></label>
                             
-                            <div class="sib-sms-field" style="width: 100%;">
+                            <div class="sib-sms-field sib-form-block" style="width: 100%;">
                                 <div class="sib-sms-input-wrapper" style="direction:ltr;">
-                                    <select class="input" name="SMS__COUNTRY_CODE" required>
-                                        <option value="+61" selected>+61 AU</option>
-                                        <option value="+1">+1 US/CA</option>
-                                        <option value="+44">+44 UK</option>
-                                        <option value="+64">+64 NZ</option>
-                                        <option value="+91">+91 IN</option>
-                                        <option value="+27">+27 ZA</option>
-                                        <option value="+33">+33 FR</option>
-                                        <option value="+49">+49 DE</option>
-                                    </select>
-                                    <input class="input" type="tel" id="SMS" name="SMS" autocomplete="off" required style="flex-grow: 1;">
+                                    <div class="sib-sms-input" data-placeholder="" data-required="true" data-country-code="AU" data-value="" data-attributename="SMS" style="display: flex; gap: 10px; width: 100%;">
+                                        
+                                        <!-- Code Picker Dropdown -->
+                                        <select class="input" name="SMS__COUNTRY_CODE" data-required="true" required>
+                                            <option value="+61" selected>+61 AU</option>
+                                            <option value="+1">+1 US/CA</option>
+                                            <option value="+44">+44 UK</option>
+                                            <option value="+64">+64 NZ</option>
+                                            <option value="+91">+91 IN</option>
+                                            <option value="+27">+27 ZA</option>
+                                            <option value="+33">+33 FR</option>
+                                            <option value="+49">+49 DE</option>
+                                        </select>
+                                        
+                                        <!-- Main Digits Entry Input -->
+                                        <input class="input" type="text" name="SMS" autocomplete="off" data-required="true" required style="flex-grow: 1;">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1064,28 +1037,24 @@
                             <textarea id="ENQUIRY_MESSAGE" name="ENQUIRY_MESSAGE" rows="4" maxlength="500" autocomplete="off" style="width: 100%; padding: 14px 12px; border: 1px solid var(--sand); border-radius: 4px; background: #fff; font-size: 1rem; font-family: inherit; color: var(--dark); resize: vertical;"></textarea>
                         </div>
 
-                        <!-- Cloudflare Challenge Component Widget -->
+                        <!-- Visual Checkbox Captcha Container Layout -->
                         <div class="captcha-container" style="margin: 5px 0 10px 0; max-width: 300px; display: block; text-align: left;">
-                            <div class="cf-turnstile" 
+                            <div class="cf-turnstile g-recaptcha" 
                                  data-sitekey="0x4AAAAAAD4ufL4HE4GXnijt" 
                                  id="sib-captcha" 
                                  data-callback="handleCaptchaResponse" 
                                  data-appearance="always" 
                                  data-language="en"></div>
-                            
-                            <!-- Named parameters capture securely inside native form fields -->
-                            <input type="hidden" name="cf-turnstile-response" id="cf-turnstile-response">
                             <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
-                            <input type="hidden" name="captcha" id="captcha">
                         </div>
 
-                        <!-- Anti-Spam Hidden Variables -->
-                        <input type="text" name="email_address_check" value="" style="display:none !important;">
+                        <!-- Hidden Anti-Spam Tokens -->
+                        <input type="text" name="email_address_check" value="" style="display:none !important;" class="input--hidden">
                         <input type="hidden" name="locale" value="en">
 
-                        <!-- Submit CTA controls -->
+                        <!-- Submit Button Element -->
                         <div style="text-align: left;">
-                            <button type="submit" class="sib-form-block__button sib-form-block__button-with-loader btn" style="border: none; cursor: pointer; text-align: center; width: auto; padding: 14px 32px; background: var(--green); color: #fff; font-family: 'Segoe UI', system-ui, sans-serif; font-weight: 700; font-size: 1.1rem; border-radius: 6px; letter-spacing: 0.5px; box-shadow: 0 4px 15px rgba(31, 75, 60, 0.2); transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 10px;">
+                            <button type="submit" class="sib-form-block__button sib-form-block__button-with-loader btn" form="sib-form" style="border: none; cursor: pointer; text-align: center; width: auto; padding: 14px 32px; background: var(--green); color: #fff; font-family: 'Segoe UI', system-ui, sans-serif; font-weight: 700; font-size: 1.1rem; border-radius: 6px; letter-spacing: 0.5px; box-shadow: 0 4px 15px rgba(31, 75, 60, 0.2); transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 10px;">
                                 <svg class="icon clickable__icon progress-indicator__icon sib-hide-loader-icon" viewBox="0 0 512 512" style="width: 16px; height: 16px; fill: currentColor;">
                                     <path d="M460.116 373.846l-20.823-12.022c-5.541-3.199-7.54-10.159-4.663-15.874 30.137-59.886 28.343-131.652-5.386-189.946-33.641-58.394-94.896-95.833-161.827-99.676C261.028 55.961 256 50.751 256 44.352V20.309c0-6.904 5.808-12.337 12.703-11.982 83.556 4.306 160.163 50.864 202.11 123.677 42.063 72.696 44.079 162.316 6.031 236.832-3.14 6.148-10.75 8.461-16.728 5.01z" />
                                 </svg>
@@ -1093,7 +1062,7 @@
                             </button>
                         </div>
 
-                        <!-- SUCCESS NOTIFICATION MODULE -->
+                        <!-- SUCCESS ALERT BOX: Renders natively under button controls -->
                         <div id="success-message" style="display: none; font-family: inherit; font-size:15px; text-align:left; color:#085229; background-color:#e7faf0; border: 1px solid #13ce66; border-radius:6px; width: 100%; margin: 10px 0 0 0; padding: 15px 20px;">
                             <div style="display: flex; align-items: center; gap: 12px;">
                                 <svg viewBox="0 0 512 512" style="width:18px; height:18px; fill:#085229; flex-shrink:0;">
@@ -1103,7 +1072,7 @@
                             </div>
                         </div>
 
-                        <!-- ERROR DISPLAY WINDOW -->
+                        <!-- Error Alert Window Area -->
                         <div id="error-message" style="display: none; font-family: inherit; font-size:15px; text-align:left; color:#661d1d; background-color:#ffeded; border: 1px solid #ff4949; border-radius:6px; width: 100%; margin: 10px 0 0 0; padding: 15px 20px;">
                             <div style="display: flex; align-items: center; gap: 12px;">
                                 <svg viewBox="0 0 512 512" style="width:18px; height:18px; fill:#661d1d; flex-shrink:0;">
@@ -1115,7 +1084,7 @@
 
                     </form>
 
-                    <!-- Brevo Platform Footer -->
+                    <!-- Brevo Compliance Footer Notice -->
                     <div class="form-compliance" style="display: flex; align-items: flex-start; gap: 20px; margin-top: 35px; padding-top: 25px; border-top: 1px solid var(--sand);">
                         <div class="compliance-logo" style="flex-shrink: 0; width: 55px; height: 55px;">
                             <svg viewBox="0 0 100 100" style="width: 100%; height: 100%;">
@@ -1132,6 +1101,7 @@
 
             </div>
         </div>
+        
     </div>
 </section>
     <footer>
