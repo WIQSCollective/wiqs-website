@@ -851,7 +851,7 @@
   };
   var AUTOHIDE = Boolean(0);
 
-  // 1. VERIFIED CAPTCHA BRIDGE: Distributes tokens cleanly across the hidden fields
+  // 1. TURNSTILE BRIDGE: Instantly populates the token fields on success
   function handleCaptchaResponse(token) {
     var inputs = ['cf-turnstile-response', 'g-recaptcha-response', 'captcha'];
     inputs.forEach(function(id) {
@@ -868,23 +868,19 @@
     }
   }
 
-  // Translates Brevo's native script lookups directly to the Turnstile module
+  // FIXED TRANSLATION BRIDGE: Feeds Brevo the token directly from the filled input element
   window.grecaptcha = {
     execute: function() {
-      if (typeof window.turnstile !== 'undefined') {
-        return window.turnstile.getResponse('#sib-captcha');
-      }
-      return '';
+      var input = document.getElementById('g-recaptcha-response');
+      return input ? input.value : '';
     },
     getResponse: function() {
-      if (typeof window.turnstile !== 'undefined') {
-        return window.turnstile.getResponse('#sib-captcha');
-      }
-      return '';
+      var input = document.getElementById('g-recaptcha-response');
+      return input ? input.value : '';
     }
   };
 
-  // 2. VERIFIED AJAX INTERCEPT ENGINE: Handles success messaging seamlessly under the button
+  // 2. AJAX INTERCEPT ENGINE: Displays the success message directly beneath the submit button
   (function() {
     var originalOpen = XMLHttpRequest.prototype.open;
     var originalSend = XMLHttpRequest.prototype.send;
@@ -924,7 +920,7 @@
               }
             }
           } catch (e) {
-            // Silently fall back if the response isn't standard JSON
+            // Graceful exit if response payload structure changes
           }
         });
       }
