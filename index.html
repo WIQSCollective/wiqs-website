@@ -973,6 +973,16 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        /* Prevent Brevo from injecting its own fullscreen success panel over our custom structure */
+:where(.sib-form-message-panel), 
+.sib-form-message-panel {
+    display: none !important;
+}
+
+#success-message, #error-message {
+    margin-top: 20px !important;
+    display: none;
+}
     </style>
 
     <div class="container">
