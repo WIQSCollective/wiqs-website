@@ -917,40 +917,43 @@
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
 <script>
-  // Correctly maps the Turnstile token to Brevo's Turnstile backend parameter
+  // Clean token multi-mapper ensuring the challenge string maps to both structural tokens
   function handleCaptchaResponse(token) {
     var turnstileInput = document.getElementById('cf-turnstile-response');
-    if (turnstileInput) {
-      turnstileInput.value = token;
-    }
+    var recaptchaInput = document.getElementById('g-recaptcha-response');
+    if (turnstileInput) turnstileInput.value = token;
+    if (recaptchaInput) recaptchaInput.value = token;
   }
 
-  // Intercept the submit event directly using standard forms handling
   document.addEventListener('DOMContentLoaded', function() {
     var form = document.getElementById('sib-form');
     if (!form) return;
 
     form.addEventListener('submit', function(e) {
-      e.preventDefault(); // Stop page redirect/reload completely
+      e.preventDefault(); // Lock form from refreshing or moving pages
 
       var submitBtn = form.querySelector('button[type="submit"]');
       var errorPanel = document.getElementById('error-message');
       var successPanel = document.getElementById('success-message');
       
-      // Reset visible panels
       errorPanel.style.display = 'none';
       successPanel.style.display = 'none';
-      
-      // Show internal processing state if loader classes exist
       if (submitBtn) submitBtn.classList.add('sib-loading');
 
-      // Convert Form data directly to URL-encoded parameters so Brevo parses it cleanly
+      // Build out the key/value params directly
       var formData = new FormData(form);
-      var urlEncodedData = new URLSearchParams(formData).toString();
+      
+      // Force bind the dynamic string token into the transmission stream
+      var tokenValue = document.getElementById('cf-turnstile-response') ? document.getElementById('cf-turnstile-response').value : '';
+      var urlEncodedData = new URLSearchParams(formData);
+      
+      // Ensure the endpoint parameters match structural formats perfectly
+      urlEncodedData.set('cf-turnstile-response', tokenValue);
+      urlEncodedData.set('g-recaptcha-response', tokenValue);
 
       fetch(form.action, {
         method: 'POST',
-        body: urlEncodedData,
+        body: urlEncodedData.toString(),
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
           'Accept': 'application/json'
@@ -963,16 +966,12 @@
         if (submitBtn) submitBtn.classList.remove('sib-loading');
         
         if (data.success) {
-          // Display the inline success message smoothly underneath the button
           successPanel.style.display = 'block';
           form.reset();
-          
-          // Safely reset the turnstile checkbox widget state
           if (typeof window.turnstile !== 'undefined') {
             window.turnstile.reset('#sib-captcha');
           }
         } else {
-          // Parse server errors inline
           errorPanel.style.display = 'block';
           var errorText = errorPanel.querySelector('.sib-form-message-panel__inner-text');
           
@@ -1089,7 +1088,7 @@
                             <textarea id="ENQUIRY_MESSAGE" name="ENQUIRY_MESSAGE" rows="4" maxlength="500" autocomplete="off" style="width: 100%; padding: 14px 12px; border: 1px solid var(--sand); border-radius: 4px; background: #fff; font-size: 1rem; font-family: inherit; color: var(--dark); resize: vertical;"></textarea>
                         </div>
 
-                        <!-- Visible Interactive Checkbox Captcha Component -->
+                        <!-- Turnstile Challenge Component container layout -->
                         <div class="captcha-container" style="margin: 5px 0 10px 0; max-width: 300px; display: block; text-align: left;">
                             <div class="cf-turnstile" 
                                  data-sitekey="0x4AAAAAAD4ufL4HE4GXnijt" 
@@ -1098,8 +1097,9 @@
                                  data-appearance="always" 
                                  data-language="en"></div>
                             
-                            <!-- Stores token value parsed by Brevo's endpoint -->
+                            <!-- Maps token data explicitly into data arrays -->
                             <input type="hidden" name="cf-turnstile-response" id="cf-turnstile-response">
+                            <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
                         </div>
 
                         <!-- Anti-Spam Hidden Variables -->
