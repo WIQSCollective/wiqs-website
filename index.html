@@ -917,12 +917,15 @@
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
 <script>
-  // Clean token multi-mapper ensuring the challenge string maps to both structural tokens
+  // Global token distribution center
   function handleCaptchaResponse(token) {
-    var turnstileInput = document.getElementById('cf-turnstile-response');
-    var recaptchaInput = document.getElementById('g-recaptcha-response');
-    if (turnstileInput) turnstileInput.value = token;
-    if (recaptchaInput) recaptchaInput.value = token;
+    var inputs = ['cf-turnstile-response', 'g-recaptcha-response', 'captcha'];
+    inputs.forEach(function(id) {
+      var element = document.getElementById(id);
+      if (element) {
+        element.value = token;
+      }
+    });
   }
 
   document.addEventListener('DOMContentLoaded', function() {
@@ -930,7 +933,7 @@
     if (!form) return;
 
     form.addEventListener('submit', function(e) {
-      e.preventDefault(); // Lock form from refreshing or moving pages
+      e.preventDefault(); // Deadlock page hops
 
       var submitBtn = form.querySelector('button[type="submit"]');
       var errorPanel = document.getElementById('error-message');
@@ -940,16 +943,18 @@
       successPanel.style.display = 'none';
       if (submitBtn) submitBtn.classList.add('sib-loading');
 
-      // Build out the key/value params directly
+      // Native browser data construction
       var formData = new FormData(form);
       
-      // Force bind the dynamic string token into the transmission stream
-      var tokenValue = document.getElementById('cf-turnstile-response') ? document.getElementById('cf-turnstile-response').value : '';
+      // Pull dynamic verified string out of the challenge elements
+      var primaryToken = document.getElementById('cf-turnstile-response') ? document.getElementById('cf-turnstile-response').value : '';
+      
       var urlEncodedData = new URLSearchParams(formData);
       
-      // Ensure the endpoint parameters match structural formats perfectly
-      urlEncodedData.set('cf-turnstile-response', tokenValue);
-      urlEncodedData.set('g-recaptcha-response', tokenValue);
+      // Inject all alternative security variations into submission payload explicitly
+      urlEncodedData.set('cf-turnstile-response', primaryToken);
+      urlEncodedData.set('g-recaptcha-response', primaryToken);
+      urlEncodedData.set('captcha', primaryToken);
 
       fetch(form.action, {
         method: 'POST',
@@ -975,7 +980,7 @@
           errorPanel.style.display = 'block';
           var errorText = errorPanel.querySelector('.sib-form-message-panel__inner-text');
           
-          if (errorText && data.errors && (data.errors['cf-turnstile-response'] || data.errors['g-recaptcha-response'])) {
+          if (errorText && data.errors && (data.errors['cf-turnstile-response'] || data.errors['g-recaptcha-response'] || data.errors['captcha'])) {
             errorText.textContent = "Security verification failed. Please check the tick box again.";
           } else if (errorText && data.errors && data.errors.message) {
             errorText.textContent = data.errors.message;
@@ -1088,7 +1093,7 @@
                             <textarea id="ENQUIRY_MESSAGE" name="ENQUIRY_MESSAGE" rows="4" maxlength="500" autocomplete="off" style="width: 100%; padding: 14px 12px; border: 1px solid var(--sand); border-radius: 4px; background: #fff; font-size: 1rem; font-family: inherit; color: var(--dark); resize: vertical;"></textarea>
                         </div>
 
-                        <!-- Turnstile Challenge Component container layout -->
+                        <!-- Cloudflare Challenge Component Widget -->
                         <div class="captcha-container" style="margin: 5px 0 10px 0; max-width: 300px; display: block; text-align: left;">
                             <div class="cf-turnstile" 
                                  data-sitekey="0x4AAAAAAD4ufL4HE4GXnijt" 
@@ -1097,9 +1102,10 @@
                                  data-appearance="always" 
                                  data-language="en"></div>
                             
-                            <!-- Maps token data explicitly into data arrays -->
+                            <!-- Named parameters capture securely inside form serializations -->
                             <input type="hidden" name="cf-turnstile-response" id="cf-turnstile-response">
                             <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
+                            <input type="hidden" name="captcha" id="captcha">
                         </div>
 
                         <!-- Anti-Spam Hidden Variables -->
