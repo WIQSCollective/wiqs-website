@@ -830,7 +830,7 @@
             </div>
         </div>
     </section>
-  <!-- Place the Brevo Assets & Validation Script either here or in your document footer -->
+<!-- Place the Brevo Assets & Validation Script either here or in your document footer -->
 <link rel="stylesheet" href="https://sibforms.com/forms/end-form/build/sib-styles.css">
 <script>
   window.REQUIRED_CODE_ERROR_MESSAGE = 'Please choose a country code';
@@ -858,10 +858,11 @@
       var element = document.getElementById(id);
       if (element) {
         element.value = token;
+        element.setAttribute('value', token); // Force HTML state mapping
       }
     });
 
-    // Notify Brevo's script that a verification change took place
+    // Notify Brevo's internal state managers that the challenge was cleared
     var event = new Event('captchaChange');
     var captchaContainer = document.getElementById('sib-captcha');
     if (captchaContainer) {
@@ -869,7 +870,28 @@
     }
   }
 
-  // Cloudflare to reCAPTCHA Intercept Shield for Brevo's main.js
+  // Deep structural fallback interceptor for native browser Form Data assembly
+  (function() {
+    var originalAppend = FormData.prototype.append;
+    FormData.prototype.append = function(name, value, filename) {
+      // Catch Brevo serialization actions instantly
+      if (name === 'g-recaptcha-response' || name === 'cf-turnstile-response' || name === 'captcha') {
+        var activeToken = '';
+        if (typeof window.turnstile !== 'undefined') {
+          activeToken = window.turnstile.getResponse('#sib-captcha') || '';
+        }
+        if (!activeToken) {
+          var tElem = document.getElementById('cf-turnstile-response');
+          if (tElem) activeToken = tElem.value;
+        }
+        // Force replace standard empty structures with the dynamic Turnstile string
+        value = activeToken || value;
+      }
+      return originalAppend.call(this, name, value, filename);
+    };
+  })();
+
+  // Mock reCAPTCHA parameters to prevent Brevo initialization crashes
   window.grecaptcha = {
     execute: function() {
       if (typeof window.turnstile !== 'undefined') {
@@ -885,53 +907,29 @@
     }
   };
 
-  // GLOBAL INTERCEPT ENGINE: Captures Brevo's native AJAX responses safely
-  (function() {
-    var originalOpen = XMLHttpRequest.prototype.open;
-    var originalSend = XMLHttpRequest.prototype.send;
+  // NATIVE RESPONSE ROUTING ENGINE: Listens directly to structural DOM validation updates
+  document.addEventListener('DOMContentLoaded', function() {
+    var form = document.getElementById('sib-form');
+    if (!form) return;
 
-    XMLHttpRequest.prototype.open = function(method, url) {
-      this._url = url;
-      return originalOpen.apply(this, arguments);
-    };
-
-    XMLHttpRequest.prototype.send = function(body) {
-      if (this._url && this._url.includes('sibforms.com/serve/')) {
-        this.addEventListener('load', function() {
-          try {
-            var data = JSON.parse(this.responseText);
-            var errorPanel = document.getElementById('error-message');
-            var successPanel = document.getElementById('success-message');
-            var form = document.getElementById('sib-form');
-            
+    // Monitor visual framework shifts to reveal customized states
+    var observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+          var errorPanel = document.getElementById('error-message');
+          var successPanel = document.getElementById('success-message');
+          
+          // Check if Brevo successfully marked the form layout complete
+          if (form.classList.contains('sib-form--success') || (window.location.search.includes('success=true'))) {
+            if (successPanel) successPanel.style.display = 'block';
             if (errorPanel) errorPanel.style.display = 'none';
-            if (successPanel) successPanel.style.display = 'none';
-
-            if (data.success) {
-              if (successPanel) successPanel.style.display = 'block';
-              if (form) form.reset();
-              if (typeof window.turnstile !== 'undefined') {
-                window.turnstile.reset('#sib-captcha');
-              }
-            } else {
-              if (errorPanel) {
-                errorPanel.style.display = 'block';
-                var errorText = errorPanel.querySelector('.sib-form-message-panel__inner-text');
-                if (errorText && data.errors && data.errors.message) {
-                  errorText.textContent = data.errors.message;
-                } else if (errorText && data.message) {
-                  errorText.textContent = data.message;
-                }
-              }
-            }
-          } catch (e) {
-            // Silently fall back if the response isn't standard JSON
           }
-        });
-      }
-      return originalSend.apply(this, arguments);
-    };
-  })();
+        }
+      });
+    });
+
+    observer.observe(form, { attributes: true });
+  });
 </script>
 <!-- Native validation script must load after the intercept wrapper -->
 <script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
